@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { CartProvider } from "@/context/cart-context"
 import Header from "@/components/header"
 import Landing from "@/components/landing"
-import Catalog from "@/components/catalog"
 import ProductDetail from "@/components/product-detail"
 import CartView from "@/components/cart-view"
 import Footer from "@/components/footer"
@@ -23,6 +23,7 @@ interface Product {
 }
 
 function HomeContent() {
+  const router = useRouter()
   const [currentView, setCurrentView] = useState<PageView>("landing")
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
@@ -36,7 +37,7 @@ function HomeContent() {
   }
 
   const handleGoToCatalog = () => {
-    setCurrentView("catalog")
+    router.push('/catalogo')
   }
 
   const handleBackToLanding = () => {
@@ -57,7 +58,6 @@ function HomeContent() {
 
       <main className="flex-1">
         {currentView === "landing" && <Landing onExploreClick={handleGoToCatalog} />}
-        {currentView === "catalog" && <Catalog onProductSelect={handleViewProduct} />}
         {currentView === "product" && selectedProduct && (
           <ProductDetail product={selectedProduct} onBack={handleBackToCatalog} />
         )}
