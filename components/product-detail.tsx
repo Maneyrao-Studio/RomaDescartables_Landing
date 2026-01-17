@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Plus, Minus } from "lucide-react"
+import { toast } from "sonner"
 import { useCart } from "@/hooks/use-cart"
 import BackButton from "@/components/ui/back-button"
 import { Button } from "@/components/ui/button"
@@ -35,7 +36,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
       quantity: quantity,
       image: product.image,
     })
-    router.push('/catalogo')
+    toast.success('Producto agregado al carrito')
   }
 
   const handleQuantityChange = (delta: number) => {
