@@ -1,12 +1,18 @@
 "use client"
+import { useRouter } from "next/navigation"
 import { ArrowRight, Package, Truck, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import ProductCard from "@/components/ui/product-card"
+import { PRODUCTS } from "@/lib/products"
 
 interface LandingProps {
   onExploreClick: () => void
 }
 
 export default function Landing({ onExploreClick }: LandingProps) {
+  const router = useRouter()
+  const featuredProducts = PRODUCTS.slice(0, 4)
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -60,6 +66,27 @@ export default function Landing({ onExploreClick }: LandingProps) {
               <h3 className="text-xl font-bold mb-2">Venta Mayor y Menor</h3>
               <p className="text-white/80">Precios especiales para compras en volumen</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products Section */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Productos Destacados</h2>
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+              Descubre nuestros productos más populares y de mayor demanda
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {featuredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onClick={() => router.push(`/producto/${product.id}`)}
+              />
+            ))}
           </div>
         </div>
       </section>
