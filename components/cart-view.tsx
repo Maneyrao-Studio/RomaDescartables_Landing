@@ -1,13 +1,11 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { ArrowLeft, Trash2, Plus, Minus } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
 
-interface CartViewProps {
-  onBack: () => void
-}
-
-export default function CartView({ onBack }: CartViewProps) {
+export default function CartView() {
+  const router = useRouter()
   const { items, removeItem, updateQuantity, getTotal, clearCart } = useCart()
 
   const handleCheckout = () => {
@@ -27,7 +25,7 @@ export default function CartView({ onBack }: CartViewProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back Button */}
         <button
-          onClick={onBack}
+          onClick={() => router.push('/catalogo')}
           className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8 font-semibold"
         >
           <ArrowLeft className="w-5 h-5" />
@@ -40,7 +38,7 @@ export default function CartView({ onBack }: CartViewProps) {
           <div className="bg-white rounded-lg p-12 text-center border border-border">
             <p className="text-foreground/60 text-lg mb-6">Tu carrito está vacío</p>
             <button
-              onClick={onBack}
+              onClick={() => router.push('/catalogo')}
               className="inline-block bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
             >
               Seguir comprando
@@ -134,7 +132,7 @@ export default function CartView({ onBack }: CartViewProps) {
                 <button
                   onClick={() => {
                     clearCart()
-                    onBack()
+                    router.push('/catalogo')
                   }}
                   className="w-full text-primary border-2 border-primary py-2 rounded-lg font-medium hover:bg-primary/5 transition-colors"
                 >

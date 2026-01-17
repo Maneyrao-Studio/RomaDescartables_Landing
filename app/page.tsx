@@ -2,39 +2,15 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { CartProvider } from "@/context/cart-context"
 import Header from "@/components/header"
 import Landing from "@/components/landing"
-import ProductDetail from "@/components/product-detail"
-import CartView from "@/components/cart-view"
 import Footer from "@/components/footer"
 
-type PageView = "landing" | "catalog" | "product" | "cart"
-
-interface Product {
-  id: string
-  name: string
-  description: string
-  price: number
-  image: string
-  category: string
-  specs?: string[]
-  quantity?: number
-}
+type PageView = "landing"
 
 function HomeContent() {
   const router = useRouter()
   const [currentView, setCurrentView] = useState<PageView>("landing")
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-
-  const handleViewProduct = (product: Product) => {
-    setSelectedProduct(product)
-    setCurrentView("product")
-  }
-
-  const handleBackToCatalog = () => {
-    setCurrentView("catalog")
-  }
 
   const handleGoToCatalog = () => {
     router.push('/catalogo')
@@ -45,7 +21,7 @@ function HomeContent() {
   }
 
   const handleGoToCart = () => {
-    setCurrentView("cart")
+    router.push('/carrito')
   }
 
   return (
@@ -58,10 +34,6 @@ function HomeContent() {
 
       <main className="flex-1">
         {currentView === "landing" && <Landing onExploreClick={handleGoToCatalog} />}
-        {currentView === "product" && selectedProduct && (
-          <ProductDetail product={selectedProduct} onBack={handleBackToCatalog} />
-        )}
-        {currentView === "cart" && <CartView onBack={handleBackToCatalog} />}
       </main>
 
       <Footer />
@@ -70,9 +42,5 @@ function HomeContent() {
 }
 
 export default function Home() {
-  return (
-    <CartProvider>
-      <HomeContent />
-    </CartProvider>
-  )
+  return <HomeContent />
 }
