@@ -10,7 +10,6 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Distribuidora Roma Descartables",
   description: "Tienda online de papelería y descartables. Venta por mayor y menor.",
-  generator: "v0.app",
   icons: {
     icon: [
       {
