@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useState, useCallback, type ReactNode } from "react"
+import { createContext, useState, useCallback, useEffect, type ReactNode } from "react"
 
 export interface CartItem {
   id: string
@@ -28,6 +28,17 @@ interface CartProviderProps {
 
 export function CartProvider({ children }: CartProviderProps) {
   const [items, setItems] = useState<CartItem[]>([])
+
+  useEffect(() => {
+    const stored = localStorage.getItem('cart')
+    if (stored) {
+      setItems(JSON.parse(stored))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(items))
+  }, [items])
 
   const addItem = useCallback((newItem: CartItem) => {
     setItems((prevItems) => {
