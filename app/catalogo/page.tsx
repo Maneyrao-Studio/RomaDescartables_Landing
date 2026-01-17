@@ -1,15 +1,12 @@
 "use client"
 
-import Header from "@/components/header"
+import PageLayout from "@/components/ui/page-layout"
 import Catalog from "@/components/catalog"
-import Footer from "@/components/footer"
 
 export default function CatalogoPage() {
   return (
-    <>
-      <Header />
+    <PageLayout>
       <Catalog />
-      <Footer />
-    </>
+    </PageLayout>
   )
 }

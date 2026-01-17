@@ -1,15 +1,12 @@
 "use client"
 
-import Header from "@/components/header"
+import PageLayout from "@/components/ui/page-layout"
 import CartView from "@/components/cart-view"
-import Footer from "@/components/footer"
 
 export default function CarritoPage() {
   return (
-    <>
-      <Header />
+    <PageLayout>
       <CartView />
-      <Footer />
-    </>
+    </PageLayout>
   )
 }

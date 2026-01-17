@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation"
-import Header from "@/components/header"
+import PageLayout from "@/components/ui/page-layout"
 import ProductDetail from "@/components/product-detail"
-import Footer from "@/components/footer"
 import { PRODUCTS } from "@/lib/products"
 
 interface ProductPageProps {
@@ -17,11 +16,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <>
-      <Header />
+    <PageLayout>
       <ProductDetail product={product} />
-      <Footer />
-    </>
+    </PageLayout>
   )
 }
 
