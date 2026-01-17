@@ -1,8 +1,10 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Trash2, Plus, Minus } from "lucide-react"
+import { Trash2, Plus, Minus } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
+import BackButton from "@/components/ui/back-button"
+import { Button } from "@/components/ui/button"
 
 export default function CartView() {
   const router = useRouter()
@@ -24,25 +26,16 @@ export default function CartView() {
     <div className="bg-background min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back Button */}
-        <button
-          onClick={() => router.push('/catalogo')}
-          className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8 font-semibold"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          Volver
-        </button>
+        <BackButton href="/catalogo" />
 
         <h1 className="text-4xl font-bold text-primary mb-12">Mi Carrito</h1>
 
         {items.length === 0 ? (
           <div className="bg-white rounded-lg p-12 text-center border border-border">
             <p className="text-foreground/60 text-lg mb-6">Tu carrito está vacío</p>
-            <button
-              onClick={() => router.push('/catalogo')}
-              className="inline-block bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-            >
+            <Button onClick={() => router.push('/catalogo')}>
               Seguir comprando
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="grid lg:grid-cols-3 gap-8">
@@ -122,22 +115,20 @@ export default function CartView() {
                   <span>${getTotal().toFixed(2)}</span>
                 </div>
 
-                <button
-                  onClick={handleCheckout}
-                  className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors mb-3"
-                >
+                <Button onClick={handleCheckout} className="w-full mb-3">
                   Comprar por WhatsApp
-                </button>
+                </Button>
 
-                <button
+                <Button
+                  variant="outline"
                   onClick={() => {
                     clearCart()
                     router.push('/catalogo')
                   }}
-                  className="w-full text-primary border-2 border-primary py-2 rounded-lg font-medium hover:bg-primary/5 transition-colors"
+                  className="w-full"
                 >
-                  Seguir comprando
-                </button>
+                  Limpiar carrito
+                </Button>
               </div>
             </div>
           </div>
