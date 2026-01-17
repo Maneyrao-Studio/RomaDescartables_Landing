@@ -105,7 +105,7 @@ export default function Landing({ onExploreClick }: LandingProps) {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/541123456789?text=Hola%20Roma%20Descartables%20quiero%20hacer%20un%20pedido"
+              href="https://wa.me/5491132813830?text=Hola%20Roma%20Descartables%20quiero%20hacer%20un%20pedido"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3 bg-accent text-primary rounded-lg font-semibold hover:bg-accent/90 transition-colors"

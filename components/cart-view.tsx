@@ -19,7 +19,7 @@ export default function CartView() {
 
     const message = `Hola Roma Descartables! Quiero hacer el siguiente pedido:%0A%0A${itemsList}%0A%0ATotal: $${getTotal().toFixed(2)}`
 
-    window.open(`https://wa.me/541123456789?text=${encodeURIComponent(message)}`, "_blank")
+    window.open(`https://wa.me/5491132813830?text=${encodeURIComponent(message)}`, "_blank")
   }
 
   return (

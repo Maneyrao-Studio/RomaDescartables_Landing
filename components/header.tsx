@@ -34,7 +34,7 @@ export default function Header({ showNavigation = false }: HeaderProps) {
           {/* Right side */}
           <div className="flex items-center gap-4">
             <a
-              href="https://wa.me/541123456789?text=Hola%20Roma%20Descartables"
+              href="https://wa.me/5491132813830?text=Hola%20Roma%20Descartables"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground hover:text-primary transition-colors text-sm font-medium"

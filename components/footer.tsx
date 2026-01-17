@@ -42,7 +42,7 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4">Contacto</h4>
             <a
-              href="https://wa.me/541123456789"
+              href="https://wa.me/5491132813830"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-accent text-primary px-4 py-2 rounded-lg font-semibold hover:bg-accent/90 transition-colors mb-3"
