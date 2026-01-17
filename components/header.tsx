@@ -1,14 +1,13 @@
 "use client"
+import Link from "next/link"
 import { ShoppingCart } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
 
 interface HeaderProps {
-  onLogoClick: () => void
   showNavigation?: boolean
-  onCartClick?: () => void
 }
 
-export default function Header({ onLogoClick, showNavigation = false, onCartClick }: HeaderProps) {
+export default function Header({ showNavigation = false }: HeaderProps) {
   const { getItemCount } = useCart()
   const itemCount = getItemCount()
 
@@ -17,7 +16,7 @@ export default function Header({ onLogoClick, showNavigation = false, onCartClic
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <button onClick={onLogoClick} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 bg-primary rounded flex items-center justify-center">
               <span className="text-white font-bold text-lg">RD</span>
             </div>
@@ -25,7 +24,7 @@ export default function Header({ onLogoClick, showNavigation = false, onCartClic
               <div className="font-bold text-sm leading-none text-primary">ROMA</div>
               <div className="font-bold text-xs text-accent">DESCARTABLES</div>
             </div>
-          </button>
+          </Link>
 
           {/* Navigation */}
           {showNavigation && (
@@ -49,14 +48,14 @@ export default function Header({ onLogoClick, showNavigation = false, onCartClic
             >
               WhatsApp
             </a>
-            <button onClick={onCartClick} className="relative p-2 hover:bg-muted rounded-lg transition-colors">
+            <Link href="/carrito" className="relative p-2 hover:bg-muted rounded-lg transition-colors">
               <ShoppingCart className="w-6 h-6" />
               {itemCount > 0 && (
                 <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-accent rounded-full">
                   {itemCount}
                 </span>
               )}
-            </button>
+            </Link>
           </div>
         </div>
       </div>

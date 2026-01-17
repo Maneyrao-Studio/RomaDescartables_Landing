@@ -26,11 +26,7 @@ function HomeContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header
-        onLogoClick={handleBackToLanding}
-        showNavigation={currentView !== "landing"}
-        onCartClick={handleGoToCart}
-      />
+      <Header />
 
       <main className="flex-1">
         {currentView === "landing" && <Landing onExploreClick={handleGoToCatalog} />}

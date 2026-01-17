@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation"
+import Header from "@/components/header"
 import ProductDetail from "@/components/product-detail"
+import Footer from "@/components/footer"
 import { PRODUCTS } from "@/lib/products"
 
 interface ProductPageProps {
@@ -14,11 +16,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound()
   }
 
-  const handleBack = () => {
-    // Navigate to catalog
-  }
-
-  return <ProductDetail product={product} />
+  return (
+    <>
+      <Header />
+      <ProductDetail product={product} />
+      <Footer />
+    </>
+  )
 }
 
 export function generateStaticParams() {
@@ -47,3 +51,4 @@ export async function generateMetadata({ params }: ProductPageProps) {
     },
   }
 }
+
