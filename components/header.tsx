@@ -2,6 +2,7 @@
 import Link from "next/link"
 import { ShoppingCart } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
+import Logo from "@/components/ui/logo"
 
 interface HeaderProps {
   showNavigation?: boolean
@@ -16,15 +17,7 @@ export default function Header({ showNavigation = false }: HeaderProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 bg-primary rounded flex items-center justify-center">
-              <span className="text-white font-bold text-lg">RD</span>
-            </div>
-            <div className="hidden sm:block">
-              <div className="font-bold text-sm leading-none text-primary">ROMA</div>
-              <div className="font-bold text-xs text-accent">DESCARTABLES</div>
-            </div>
-          </Link>
+          <Logo />
 
           {/* Navigation */}
           {showNavigation && (
