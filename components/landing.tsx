@@ -88,6 +88,11 @@ export default function Landing({ onExploreClick }: LandingProps) {
               />
             ))}
           </div>
+          <div className="text-center mt-12">
+            <Button onClick={onExploreClick} size="lg">
+              Ver Catálogo
+            </Button>
+          </div>
         </div>
       </section>
 
