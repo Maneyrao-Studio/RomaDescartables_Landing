@@ -3,13 +3,12 @@ import ProductDetail from "@/components/product-detail"
 import { PRODUCTS } from "@/lib/products"
 
 interface ProductPageProps {
-  params: {
-    id: string
-  }
+  params: Promise<{ id: string }>
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const product = PRODUCTS.find(p => p.id === params.id)
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { id } = await params
+  const product = PRODUCTS.find(p => p.id === id)
 
   if (!product) {
     notFound()
@@ -29,7 +28,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProductPageProps) {
-  const product = PRODUCTS.find(p => p.id === params.id)
+  const { id } = await params
+  const product = PRODUCTS.find(p => p.id === id)
 
   if (!product) {
     return {
