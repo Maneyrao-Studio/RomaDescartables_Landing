@@ -35,7 +35,6 @@ export default function ProductDetail({ product }: ProductDetailProps) {
       quantity: quantity,
       image: product.image,
     })
-    alert(`${quantity} ${quantity === 1 ? "artículo" : "artículos"} agregado(s) al carrito`)
     router.push('/catalogo')
   }
 
