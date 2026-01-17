@@ -1,12 +1,17 @@
 "use client"
 import { ShoppingCart } from "lucide-react"
+import { useCart } from "@/hooks/use-cart"
 
 interface HeaderProps {
   onLogoClick: () => void
   showNavigation?: boolean
+  onCartClick?: () => void
 }
 
-export default function Header({ onLogoClick, showNavigation = false }: HeaderProps) {
+export default function Header({ onLogoClick, showNavigation = false, onCartClick }: HeaderProps) {
+  const { getItemCount } = useCart()
+  const itemCount = getItemCount()
+
   return (
     <header className="sticky top-0 z-40 w-full bg-white border-b border-border shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,11 +49,13 @@ export default function Header({ onLogoClick, showNavigation = false }: HeaderPr
             >
               WhatsApp
             </a>
-            <button className="relative p-2 hover:bg-muted rounded-lg transition-colors">
+            <button onClick={onCartClick} className="relative p-2 hover:bg-muted rounded-lg transition-colors">
               <ShoppingCart className="w-6 h-6" />
-              <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-accent rounded-full">
-                0
-              </span>
+              {itemCount > 0 && (
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-accent rounded-full">
+                  {itemCount}
+                </span>
+              )}
             </button>
           </div>
         </div>

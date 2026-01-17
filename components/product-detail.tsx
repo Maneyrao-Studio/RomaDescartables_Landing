@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowLeft, ShoppingCart, Plus, Minus } from "lucide-react"
+import { ArrowLeft, Plus, Minus } from "lucide-react"
+import { useCart } from "@/hooks/use-cart"
 
 interface Product {
   id: string
@@ -21,12 +22,18 @@ interface ProductDetailProps {
 
 export default function ProductDetail({ product, onBack }: ProductDetailProps) {
   const [quantity, setQuantity] = useState(1)
+  const { addItem } = useCart()
 
   const handleAddToCart = () => {
-    console.log(`Added ${quantity} of ${product.name} to cart`)
-    // This will trigger WhatsApp with product details
-    const message = `Hola Roma Descartables! Quiero ${quantity} unidad(es) de: ${product.name} - $${product.price.toFixed(2)} c/u`
-    window.open(`https://wa.me/541123456789?text=${encodeURIComponent(message)}`, "_blank")
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: quantity,
+      image: product.image,
+    })
+    alert(`${quantity} ${quantity === 1 ? "artículo" : "artículos"} agregado(s) al carrito`)
+    onBack()
   }
 
   const handleQuantityChange = (delta: number) => {
@@ -112,10 +119,9 @@ export default function ProductDetail({ product, onBack }: ProductDetailProps) {
               {/* CTA Buttons */}
               <button
                 onClick={handleAddToCart}
-                className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 mb-4"
+                className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors mb-4"
               >
-                <ShoppingCart className="w-5 h-5" />
-                Comprar por WhatsApp
+                Agregar al Carrito
               </button>
 
               <p className="text-center text-foreground/60 text-sm">
