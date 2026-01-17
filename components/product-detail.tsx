@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { ArrowLeft, Plus, Minus } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
 
@@ -17,10 +18,10 @@ interface Product {
 
 interface ProductDetailProps {
   product: Product
-  onBack: () => void
 }
 
-export default function ProductDetail({ product, onBack }: ProductDetailProps) {
+export default function ProductDetail({ product }: ProductDetailProps) {
+  const router = useRouter()
   const [quantity, setQuantity] = useState(1)
   const { addItem } = useCart()
 
@@ -33,7 +34,7 @@ export default function ProductDetail({ product, onBack }: ProductDetailProps) {
       image: product.image,
     })
     alert(`${quantity} ${quantity === 1 ? "artículo" : "artículos"} agregado(s) al carrito`)
-    onBack()
+    router.push('/catalogo')
   }
 
   const handleQuantityChange = (delta: number) => {
@@ -45,7 +46,7 @@ export default function ProductDetail({ product, onBack }: ProductDetailProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back Button */}
         <button
-          onClick={onBack}
+          onClick={() => router.push('/catalogo')}
           className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8 font-semibold"
         >
           <ArrowLeft className="w-5 h-5" />
