@@ -96,23 +96,21 @@ export default function Landing({ onExploreClick }: LandingProps) {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Location Section */}
       <section className="bg-muted py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">¿Listo para hacer tu pedido?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Nuestra Ubicación</h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Contáctanos por WhatsApp o explora nuestro catálogo completo. Estamos listos para servirte.
+            Visítanos en San Justo, La Matanza. Papelera Roma Descartables - Tu distribuidora de confianza.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://wa.me/5491132813830?text=Hola%20Roma%20Descartables%20quiero%20hacer%20un%20pedido"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-3 bg-accent text-primary rounded-lg font-semibold hover:bg-accent/90 transition-colors"
-            >
-              Contactar por WhatsApp
-            </a>
-          </div>
+          <a
+            href="https://www.google.com/maps/place/Papelera+Roma+Descartables/@-34.6794676,-58.5669873,17z/data=!3m1!4b1!4m6!3m5!1s0x95bccb438c420a0d:0x554dada6bb82b722!8m2!3d-34.679472!4d-58.5644124!16s%2Fg%2F11rcrj8f3n?entry=ttu&g_ep=EgoyMDI1MTIwOC4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+          >
+            Ver en Google Maps
+          </a>
         </div>
       </section>
     </div>
