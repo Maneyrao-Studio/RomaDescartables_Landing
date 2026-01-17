@@ -1,5 +1,6 @@
 "use client"
 import { ArrowRight, Package, Truck, Award } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 interface LandingProps {
   onExploreClick: () => void
@@ -23,13 +24,10 @@ export default function Landing({ onExploreClick }: LandingProps) {
               Bolsas de tela, bandejas de cartón y mucho más. Todos nuestros productos están pensados para tu
               conveniencia.
             </p>
-            <button
-              onClick={onExploreClick}
-              className="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-            >
+            <Button onClick={onExploreClick} size="lg">
               Explorar Catálogo
               <ArrowRight className="w-5 h-5" />
-            </button>
+            </Button>
           </div>
           <div className="bg-accent/10 rounded-2xl p-8 flex items-center justify-center min-h-96">
             <div className="text-center">
@@ -74,12 +72,9 @@ export default function Landing({ onExploreClick }: LandingProps) {
             Contáctanos por WhatsApp o explora nuestro catálogo completo. Estamos listos para servirte.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={onExploreClick}
-              className="px-8 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-            >
+            <Button onClick={onExploreClick} size="lg">
               Ver Catálogo
-            </button>
+            </Button>
             <a
               href="https://wa.me/541123456789?text=Hola%20Roma%20Descartables%20quiero%20hacer%20un%20pedido"
               target="_blank"
