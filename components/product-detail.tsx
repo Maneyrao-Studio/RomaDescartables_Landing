@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Plus, Minus } from "lucide-react"
 import { toast } from "sonner"
 import { useCart } from "@/hooks/use-cart"
+import { formatPrice } from "@/lib/utils"
 import BackButton from "@/components/ui/back-button"
 import { Button } from "@/components/ui/button"
 
@@ -84,7 +85,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               {/* Price */}
               <div className="mb-6">
                 <p className="text-foreground/60 text-sm mb-2">Precio unitario</p>
-                <div className="text-4xl font-bold text-primary">${product.price.toFixed(2)}</div>
+                <div className="text-4xl font-bold text-primary">{formatPrice(product.price)}</div>
               </div>
 
               {/* Quantity */}
@@ -110,7 +111,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               {/* Total */}
               <div className="bg-muted p-4 rounded-lg mb-6">
                 <p className="text-foreground/60 text-sm mb-1">Total</p>
-                <p className="text-2xl font-bold text-primary">${(product.price * quantity).toFixed(2)}</p>
+                <p className="text-2xl font-bold text-primary">{formatPrice(product.price * quantity)}</p>
               </div>
 
               {/* CTA Buttons */}

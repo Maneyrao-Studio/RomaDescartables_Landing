@@ -1,7 +1,7 @@
 "use client"
 
 import { ShoppingCart } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { cn, formatPrice } from "@/lib/utils"
 import { Product } from "@/lib/products"
 
 interface ProductCardProps {
@@ -33,7 +33,7 @@ export default function ProductCard({ product, onClick, className }: ProductCard
 
         {/* Price and Button */}
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold text-primary">${product.price.toFixed(2)}</div>
+          <div className="text-2xl font-bold text-primary">{formatPrice(product.price)}</div>
           <button
             onClick={(e) => {
               e.stopPropagation()

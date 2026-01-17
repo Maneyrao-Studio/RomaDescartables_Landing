@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import { Trash2, Plus, Minus } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
+import { formatPrice } from "@/lib/utils"
 import BackButton from "@/components/ui/back-button"
 import { Button } from "@/components/ui/button"
 
@@ -14,10 +15,10 @@ export default function CartView() {
     if (items.length === 0) return
 
     const itemsList = items
-      .map((item) => `- ${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`)
+      .map((item) => `- ${item.name} (x${item.quantity}) - ${formatPrice(item.price * item.quantity)}`)
       .join("%0A")
 
-    const message = `Hola Roma Descartables! Quiero hacer el siguiente pedido:%0A%0A${itemsList}%0A%0ATotal: $${getTotal().toFixed(2)}`
+    const message = `Hola Roma Descartables! Quiero hacer el siguiente pedido:%0A%0A${itemsList}%0A%0ATotal: ${formatPrice(getTotal())}`
 
     window.open(`https://wa.me/5491132813830?text=${encodeURIComponent(message)}`, "_blank")
   }
@@ -56,7 +57,7 @@ export default function CartView() {
                     {/* Product Info */}
                     <div className="flex-1">
                       <h3 className="font-bold text-primary mb-2">{item.name}</h3>
-                      <p className="text-foreground/60 text-sm mb-4">${item.price.toFixed(2)} c/u</p>
+                      <p className="text-foreground/60 text-sm mb-4">{formatPrice(item.price)} c/u</p>
 
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-2">
@@ -86,7 +87,7 @@ export default function CartView() {
                       </button>
                       <div>
                         <p className="text-foreground/60 text-xs mb-1">Subtotal</p>
-                        <p className="text-xl font-bold text-primary">${(item.price * item.quantity).toFixed(2)}</p>
+                        <p className="text-xl font-bold text-primary">{formatPrice(item.price * item.quantity)}</p>
                       </div>
                     </div>
                   </div>
@@ -102,7 +103,7 @@ export default function CartView() {
                 <div className="space-y-4 mb-6 pb-6 border-b border-border">
                   <div className="flex justify-between text-foreground/60">
                     <span>Subtotal:</span>
-                    <span>${getTotal().toFixed(2)}</span>
+                    <span>{formatPrice(getTotal())}</span>
                   </div>
                   <div className="flex justify-between text-foreground/60">
                     <span>Envío:</span>
@@ -112,7 +113,7 @@ export default function CartView() {
 
                 <div className="flex justify-between text-2xl font-bold text-primary mb-6">
                   <span>Total:</span>
-                  <span>${getTotal().toFixed(2)}</span>
+                  <span>{formatPrice(getTotal())}</span>
                 </div>
 
                 <Button onClick={handleCheckout} className="w-full mb-3">
