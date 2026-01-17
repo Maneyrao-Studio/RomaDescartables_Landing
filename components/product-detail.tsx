@@ -2,8 +2,10 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Plus, Minus } from "lucide-react"
+import { Plus, Minus } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
+import BackButton from "@/components/ui/back-button"
+import { Button } from "@/components/ui/button"
 
 interface Product {
   id: string
@@ -45,13 +47,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
     <div className="bg-background min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back Button */}
-        <button
-          onClick={() => router.push('/catalogo')}
-          className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-8 font-semibold"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          Volver al Catálogo
-        </button>
+        <BackButton href="/catalogo" text="Volver al Catálogo" />
 
         {/* Product Details */}
         <div className="grid md:grid-cols-2 gap-12 bg-white rounded-lg p-8 shadow-sm">
@@ -118,12 +114,9 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               </div>
 
               {/* CTA Buttons */}
-              <button
-                onClick={handleAddToCart}
-                className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors mb-4"
-              >
+              <Button onClick={handleAddToCart} className="w-full mb-4">
                 Agregar al Carrito
-              </button>
+              </Button>
 
               <p className="text-center text-foreground/60 text-sm">
                 También puedes contactarnos directamente por WhatsApp para consultas sobre precios mayoristas.
