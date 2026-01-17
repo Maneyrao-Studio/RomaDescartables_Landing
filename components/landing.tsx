@@ -104,9 +104,6 @@ export default function Landing({ onExploreClick }: LandingProps) {
             Contáctanos por WhatsApp o explora nuestro catálogo completo. Estamos listos para servirte.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button onClick={onExploreClick} size="lg">
-              Ver Catálogo
-            </Button>
             <a
               href="https://wa.me/541123456789?text=Hola%20Roma%20Descartables%20quiero%20hacer%20un%20pedido"
               target="_blank"
