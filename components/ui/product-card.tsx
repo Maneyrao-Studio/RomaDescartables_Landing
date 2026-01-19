@@ -13,7 +13,7 @@ interface ProductCardProps {
 export default function ProductCard({ product, onClick, className }: ProductCardProps) {
   return (
     <div
-      className={cn("bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow cursor-pointer border border-border", className)}
+      className={cn("bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow cursor-pointer border border-border group", className)}
       onClick={onClick}
     >
       {/* Product Image */}
@@ -21,7 +21,7 @@ export default function ProductCard({ product, onClick, className }: ProductCard
         <img
           src={product.image || "/placeholder.svg"}
           alt={product.name}
-          className="w-full h-full object-cover hover:scale-105 transition-transform"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
         />
       </div>
 
