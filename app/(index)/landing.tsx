@@ -14,29 +14,23 @@ export default function Landing({ onExploreClick }: LandingProps) {
 
   const carouselImages = [
     {
-      src: "/tela-bolsa-45x40.jpg",
-      alt: "Bolsas de tela resistentes",
-      title: "Bolsas de Tela Premium",
-      description: "Resistentes y reutilizables para tu negocio"
+      src: "/carrusel-1.webp",
+      alt: "",
     },
     {
-      src: "/bandeja-carton-blanca.jpg",
-      alt: "Bandejas de cartón",
-      title: "Bandejas de Cartón",
-      description: "Perfectas para alimentos y presentaciones"
+      src: "/carrusel-2.webp",
+      alt: "",
     },
     {
       src: "/RomaDescartable_LOGO.jpg",
       alt: "Roma Descartables - Logo",
-      title: "Roma Descartables",
-      description: "Tu aliado en papelería y descartables"
     }
   ]
 
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="py-20 md:py-32">
+      <section className="pb-20 md:pb-32">
         {/* Carousel ocupando 100% del ancho */}
         <div className="w-full h-96 md:h-[500px] lg:h-[600px] mb-12">
           <HeroCarousel images={carouselImages} />
