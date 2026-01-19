@@ -40,7 +40,7 @@ export default function HeroCarousel({ images }: HeroCarouselProps) {
   }
 
   return (
-    <div className="relative w-full h-full min-h-96 rounded-2xl overflow-hidden">
+    <div className="relative w-full h-full overflow-hidden">
       {/* Images */}
       <div className="relative w-full h-full">
         {images.map((image, index) => (

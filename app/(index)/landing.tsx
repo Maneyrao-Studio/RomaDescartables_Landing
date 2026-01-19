@@ -36,9 +36,15 @@ export default function Landing({ onExploreClick }: LandingProps) {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+      <section className="py-20 md:py-32">
+        {/* Carousel ocupando 100% del ancho */}
+        <div className="w-full h-96 md:h-[500px] lg:h-[600px] mb-12">
+          <HeroCarousel images={carouselImages} />
+        </div>
+
+        {/* Textos abajo del carousel */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6 leading-tight">
               Papelería y Descartables de Calidad
             </h1>
@@ -50,13 +56,10 @@ export default function Landing({ onExploreClick }: LandingProps) {
               Bolsas de tela, bandejas de cartón y mucho más. Todos nuestros productos están pensados para tu
               conveniencia.
             </p>
-            <Button onClick={onExploreClick} size="lg">
+            <Button onClick={onExploreClick} size="lg" className="mx-auto">
               Explorar Catálogo
               <ArrowRight className="w-5 h-5" />
             </Button>
-          </div>
-          <div className="bg-accent/10 rounded-2xl p-2 min-h-96">
-            <HeroCarousel images={carouselImages} />
           </div>
         </div>
       </section>
