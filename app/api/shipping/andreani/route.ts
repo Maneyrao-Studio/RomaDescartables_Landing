@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     // Check if API keys are configured
     const apiKey = process.env.ANDREANI_API_KEY
     const contractCode = process.env.ANDREANI_CONTRACT || 'AND00SUC'
-    const originCP = process.env.ANDREANI_ORIGIN_CP || '1424' // Default to Buenos Aires
+    const originCP = process.env.ANDREANI_ORIGIN_CP || '1754' // Default to San Justo
 
     if (!apiKey) {
       // En desarrollo, retornar datos simulados para pruebas
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        cpOrigen: originCP,
+        cpOrigen: originCP, // San Justo, Provincia de Buenos Aires
         cpDestino: destinationCP,
         peso: weight,
         volumen: volume,

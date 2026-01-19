@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     // Check if API keys are configured
     const apiKey = process.env.CORREO_ARGENTINO_API_KEY
     const contractCode = process.env.CORREO_ARGENTINO_CONTRACT
-    const originCP = process.env.CORREO_ARGENTINO_ORIGIN_CP || '1424' // Default to Buenos Aires
+    const originCP = process.env.CORREO_ARGENTINO_ORIGIN_CP || '1754' // Default to San Justo
 
     if (!apiKey || !contractCode) {
       // En desarrollo, retornar datos simulados para pruebas
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        cp_origen: originCP,
+        cp_origen: originCP, // San Justo, Provincia de Buenos Aires
         cp_destino: destinationCP,
         peso: weight,
         volumen: volume,

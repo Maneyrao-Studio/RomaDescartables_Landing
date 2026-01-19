@@ -65,10 +65,10 @@ export async function POST(request: Request) {
         'X-API-Key': apiKey // Some APIs use X-API-Key header
       },
       body: JSON.stringify({
-        origin: {
-          postal_code: process.env.SHIPNOW_ORIGIN_CP || '1424', // Buenos Aires default
-          country: 'AR'
-        },
+    origin: {
+      postal_code: process.env.SHIPNOW_ORIGIN_CP || '1754', // San Justo, Provincia de Buenos Aires
+      country: 'AR'
+    },
         destination: {
           postal_code: destinationCP,
           country: 'AR'

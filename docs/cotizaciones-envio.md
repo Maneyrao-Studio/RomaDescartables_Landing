@@ -39,7 +39,7 @@ Esta aplicación incluye funcionalidad integrada de cotizaciones de envío para 
 ```env
 CORREO_ARGENTINO_API_KEY=your_api_key_here
 CORREO_ARGENTINO_CONTRACT=your_contract_code
-CORREO_ARGENTINO_ORIGIN_CP=1424
+CORREO_ARGENTINO_ORIGIN_CP=1754
 CORREO_ARGENTINO_API_URL=https://your-api-endpoint-here  # Proporcionado después del registro
 ```
 
@@ -57,7 +57,7 @@ CORREO_ARGENTINO_API_URL=https://your-api-endpoint-here  # Proporcionado despué
 ```env
 ANDREANI_API_KEY=your_api_key_here
 ANDREANI_CONTRACT=AND00SUC
-ANDREANI_ORIGIN_CP=1424
+ANDREANI_ORIGIN_CP=1754
 ```
 
 #### Shipnow
@@ -80,7 +80,7 @@ ANDREANI_ORIGIN_CP=1424
 ```env
 SHIPNOW_API_KEY=your_api_key_here
 SHIPNOW_API_URL=https://api.shipnow.com.ar/v1  # URL base de la API
-SHIPNOW_ORIGIN_CP=1424
+SHIPNOW_ORIGIN_CP=1754
 ```
 
 ### Implementación Técnica

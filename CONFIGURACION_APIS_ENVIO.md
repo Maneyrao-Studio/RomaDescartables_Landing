@@ -16,7 +16,7 @@
 ```env
 CORREO_ARGENTINO_API_KEY=tu_clave_api_aqui
 CORREO_ARGENTINO_CONTRACT=tu_codigo_contrato
-CORREO_ARGENTINO_ORIGIN_CP=1424  # Código postal de origen
+CORREO_ARGENTINO_ORIGIN_CP=1754  # Código postal de origen
 CORREO_ARGENTINO_API_URL=https://tu-endpoint-especifico
 ```
 
@@ -31,8 +31,8 @@ CORREO_ARGENTINO_API_URL=https://tu-endpoint-especifico
 
 ```json
 {
-  "cp_origen": "1424",
-  "cp_destino": "1754",
+  "cp_origen": "1754",
+  "cp_destino": "1000",
   "peso": 2500,
   "volumen": 0.000009,
   "contrato": "TU_CONTRATO"
@@ -65,7 +65,7 @@ CORREO_ARGENTINO_API_URL=https://tu-endpoint-especifico
 ```env
 ANDREANI_API_KEY=tu_clave_api_aqui
 ANDREANI_CONTRACT=AND00SUC
-ANDREANI_ORIGIN_CP=1424
+ANDREANI_ORIGIN_CP=1754
 ```
 
 ### Endpoint de API
@@ -79,8 +79,8 @@ ANDREANI_ORIGIN_CP=1424
 
 ```json
 {
-  "cpOrigen": "1424",
-  "cpDestino": "1754",
+  "cpOrigen": "1754",
+  "cpDestino": "1000",
   "peso": 2500,
   "volumen": 9000,
   "contrato": "AND00SUC",
@@ -120,7 +120,7 @@ ANDREANI_ORIGIN_CP=1424
 ```env
 SHIPNOW_API_KEY=tu_clave_api_aqui
 SHIPNOW_API_URL=https://api.shipnow.com.ar/v1
-SHIPNOW_ORIGIN_CP=1424
+SHIPNOW_ORIGIN_CP=1754
 ```
 
 ### Endpoint de API
@@ -135,11 +135,11 @@ SHIPNOW_ORIGIN_CP=1424
 ```json
 {
   "origin": {
-    "postal_code": "1424",
+    "postal_code": "1754",
     "country": "AR"
   },
   "destination": {
-    "postal_code": "1754",
+    "postal_code": "1000",
     "country": "AR"
   },
   "package": {
