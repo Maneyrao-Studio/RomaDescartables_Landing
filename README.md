@@ -4,8 +4,13 @@ Una aplicación Next.js para una tienda online de papelería y descartables (Dis
 
 ## Documentación
 
-### Cotizaciones de Envío
-📖 **[Ver documentación completa de cotizaciones de envío](docs/cotizaciones-envio.md)**
+### 📚 Documentación Técnica
+
+- **[Cotizaciones de Envío](docs/cotizaciones-envio.md)** - Sistema completo de cotizaciones integrado con Correo Argentino y Andreani
+- **[Guía de Implementación](ENVIO_GUIA_IMPLEMENTACION.md)** - Guía detallada para desarrolladores
+- **[Configuración de APIs](CONFIGURACION_APIS_ENVIO.md)** - Configuración paso a paso de proveedores de envío
+
+### 🚀 Inicio Rápido
 
 Esta aplicación incluye un sistema completo de cotizaciones de envío integrado con Correo Argentino y Andreani para Argentina.
 
