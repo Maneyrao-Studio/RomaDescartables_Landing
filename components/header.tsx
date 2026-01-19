@@ -1,8 +1,10 @@
 "use client"
+import { useState } from "react"
 import Link from "next/link"
-import { ShoppingCart } from "lucide-react"
+import { ShoppingCart, Menu as MenuIcon } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
 import Logo from "@/components/ui/logo"
+import Menu from "@/components/ui/menu"
 
 interface HeaderProps {
   showNavigation?: boolean
@@ -11,36 +13,15 @@ interface HeaderProps {
 export default function Header({ showNavigation = false }: HeaderProps) {
   const { getItemCount } = useCart()
   const itemCount = getItemCount()
+  const [isMenuOpen, setIsMenuOpen] = useState(showNavigation)
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white border-b border-border shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Logo />
 
-          {/* Navigation */}
-          {showNavigation && (
-            <nav className="hidden md:flex items-center gap-6">
-              <button className="text-foreground hover:text-primary transition-colors text-sm font-medium">
-                Catálogo
-              </button>
-              <button className="text-foreground hover:text-primary transition-colors text-sm font-medium">
-                Contacto
-              </button>
-            </nav>
-          )}
-
-          {/* Right side */}
           <div className="flex items-center gap-4">
-            <a
-              href="https://wa.me/5491132813830?text=Hola%20Roma%20Descartables"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
-            >
-              WhatsApp
-            </a>
             <Link href="/carrito" className="relative p-2 hover:bg-muted rounded-lg transition-colors">
               <ShoppingCart className="w-6 h-6" />
               {itemCount > 0 && (
@@ -49,9 +30,20 @@ export default function Header({ showNavigation = false }: HeaderProps) {
                 </span>
               )}
             </Link>
+            <button
+              onClick={() => setIsMenuOpen(true)}
+              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              aria-label="Abrir menú"
+            >
+              <MenuIcon className="w-6 h-6" />
+            </button>
           </div>
         </div>
       </div>
+      <Menu
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+      />
     </header>
   )
 }
