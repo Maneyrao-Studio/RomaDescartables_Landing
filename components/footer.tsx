@@ -1,4 +1,4 @@
-import { Phone, MapPin, Clock } from "lucide-react"
+import { Phone, MapPin, Clock, Instagram } from "lucide-react"
 import Logo from "./ui/logo"
 
 export default function Footer() {
@@ -34,16 +34,28 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h4 className="font-bold text-lg mb-4">Contacto</h4>
-            <a
-              href="https://wa.me/5491132813830"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-accent text-primary px-4 py-2 rounded-lg font-semibold hover:bg-accent/90 transition-colors mb-3"
-            >
-              <Phone className="w-5 h-5" />
-              WhatsApp
-            </a>
+            <div className="flex flex-col gap-3 mb-4">
+              <a
+                href="https://wa.me/5491132813830"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-accent text-primary px-4 py-2 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
+              >
+                <Phone className="w-5 h-5" />
+                WhatsApp
+              </a>
+              <a
+                href="https://www.instagram.com/romadescartables"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+              >
+                <Instagram className="w-5 h-5" />
+                Instagram
+              </a>
+            </div>
             <p className="text-white/80 text-sm">📲 Hace tu pedido directo por WhatsApp</p>
+            <p className="text-white/80 text-sm">📸 Síguenos en Instagram para novedades</p>
           </div>
         </div>
 
