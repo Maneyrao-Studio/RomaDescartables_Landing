@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link"
 import { Package, Truck, Award } from "lucide-react"
 import { PRODUCTS } from "@/lib/products"
 import ProductsSection from "./components/ProductsSection"
@@ -46,41 +47,47 @@ export default function Landing({ onExploreClick }: LandingProps) {
          </header>
           <div className="grid md:grid-cols-3 gap-8">
 
-            <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer px-4 py-6 flex flex-col items-center text-center group">
-              <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden">
-                <img 
-                  src="/tela-bolsa-45x40.jpg" 
-                  alt="" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"  
-                />
+            <Link href="/catalogo?categoria=Bandejas%20de%20Cartón">
+              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow px-4 py-6 flex flex-col items-center text-center group">
+                <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden">
+                  <img
+                    src="/tela-bolsa-45x40.jpg"
+                    alt=""
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Bandejas y envases desechables</h3>
+                <p className="text-black/80">Bandejas de aluminio, bandejas de cartón, bandejas plástica, platos y discos dorados, entre otros.</p>
               </div>
-              <h3 className="text-xl font-bold mb-2">Bandejas y envases desechables</h3>
-              <p className="text-black/80">Bandejas de aluminio, bandejas de cartón, bandejas plástica, platos y discos dorados, entre otros.</p>
-            </div>
+            </Link>
 
-            <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer px-4 py-6 flex flex-col items-center text-center group">
-              <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden">
-                <img 
-                  src="/tela-bolsa-45x40.jpg" 
-                  alt="" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"  
-                />
+            <Link href="/catalogo?categoria=Bolsas%20de%20Tela">
+              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow px-4 py-6 flex flex-col items-center text-center group">
+                <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden">
+                  <img
+                    src="/tela-bolsa-45x40.jpg"
+                    alt=""
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Bolsas y empaques</h3>
+                <p className="text-black/80">Bolsas de polipropileno, bolsas de tela, bolsas kraft, bolsas de papel, bolsas riñón y rollos de arranque.</p>
               </div>
-              <h3 className="text-xl font-bold mb-2">Bolsas y empaques</h3>
-              <p className="text-black/80">Bolsas de polipropileno, bolsas de tela, bolsas kraft, bolsas de papel, bolsas riñón y rollos de arranque.</p>
-            </div>
+            </Link>
 
-            <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer px-4 py-6 flex flex-col items-center text-center group">
-              <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden ">
-                <img 
-                  src="/tela-bolsa-45x40.jpg" 
-                  alt="" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"  
-                />
+            <Link href="/catalogo">
+              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow px-4 py-6 flex flex-col items-center text-center group">
+                <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden ">
+                  <img
+                    src="/tela-bolsa-45x40.jpg"
+                    alt=""
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Artículos de librería y papelería</h3>
+                <p className="text-black/80">Cuadernos, carpetas, calculadoras, marcadores, cintas adhesivas y otros materiales de oficina.</p>
               </div>
-              <h3 className="text-xl font-bold mb-2">Artículos de librería y papelería</h3>
-              <p className="text-black/80">Cuadernos, carpetas, calculadoras, marcadores, cintas adhesivas y otros materiales de oficina.</p>
-            </div>
+            </Link>
 
           </div>
         </div>
