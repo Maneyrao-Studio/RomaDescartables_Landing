@@ -60,6 +60,29 @@ ANDREANI_CONTRACT=AND00SUC
 ANDREANI_ORIGIN_CP=1424
 ```
 
+#### Shipnow
+
+**Endpoint**: `POST /api/shipping/shipnow`
+
+**Requisitos**:
+- Cuenta comercial con Shipnow
+- Servicio de fulfillment/logística
+- Credenciales de API
+- Código postal de origen
+
+**Servicios Ofrecidos**:
+- Shipfull: Fulfillment completo
+- Ship2B: Logística mayorista
+- Shipcross: Crossdocking
+- Shipwow: Campañas puntuales
+
+**Variables de Entorno**:
+```env
+SHIPNOW_API_KEY=your_api_key_here
+SHIPNOW_API_URL=https://api.shipnow.com.ar/v1  # URL base de la API
+SHIPNOW_ORIGIN_CP=1424
+```
+
 ### Implementación Técnica
 
 #### Actualizaciones del Contexto del Carrito

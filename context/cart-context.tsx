@@ -11,12 +11,15 @@ export interface CartItem {
 }
 
 export interface ShippingQuote {
-  provider: 'correo_argentino' | 'andreani'
+  provider: 'correo_argentino' | 'andreani' | 'shipnow'
   cost: number
   estimatedDays: string
   serviceType: string
   currency: string
   pickupAvailable?: boolean
+  tracking_available?: boolean
+  insurance_included?: boolean
+  service_level?: string
 }
 
 export type ShippingMethod = 'pickup' | 'quote'
@@ -40,7 +43,7 @@ interface CartContextType {
   getItemCount: () => number
   setShippingMethod: (method: ShippingMethod) => void
   setDestinationCP: (cp: string) => void
-  getShippingQuote: (provider: 'correo_argentino' | 'andreani') => Promise<void>
+  getShippingQuote: (provider: 'correo_argentino' | 'andreani' | 'shipnow') => Promise<void>
   getTotalWithShipping: () => number
 }
 
@@ -137,7 +140,7 @@ export function CartProvider({ children }: CartProviderProps) {
     }))
   }, [])
 
-  const getShippingQuote = useCallback(async (provider: 'correo_argentino' | 'andreani') => {
+  const getShippingQuote = useCallback(async (provider: 'correo_argentino' | 'andreani' | 'shipnow') => {
     if (!shipping.destinationCP) {
       setShipping(prev => ({ ...prev, error: 'Ingrese el código postal de destino' }))
       return

@@ -23,7 +23,7 @@ export default function CartView() {
     getTotalWithShipping
   } = useCart()
 
-  const [selectedProvider, setSelectedProvider] = useState<'correo_argentino' | 'andreani'>('correo_argentino')
+  const [selectedProvider, setSelectedProvider] = useState<'correo_argentino' | 'andreani' | 'shipnow'>('correo_argentino')
 
   const handleCheckout = () => {
     if (items.length === 0) return
@@ -36,7 +36,13 @@ export default function CartView() {
     if (shipping.method === 'pickup') {
       shippingInfo = "Envío: Retiro por sucursal"
     } else if (shipping.quote) {
-      shippingInfo = `Envío: ${shipping.quote.provider === 'correo_argentino' ? 'Correo Argentino' : 'Andreani'} - ${formatPrice(shipping.quote.cost)} (${shipping.quote.estimatedDays} días)`
+      const providerName = {
+        'correo_argentino': 'Correo Argentino',
+        'andreani': 'Andreani',
+        'shipnow': 'Shipnow'
+      }[shipping.quote.provider] || shipping.quote.provider
+
+      shippingInfo = `Envío: ${providerName} - ${formatPrice(shipping.quote.cost)} (${shipping.quote.estimatedDays})`
     } else {
       shippingInfo = "Envío: Por cotizar"
     }
@@ -173,7 +179,7 @@ export default function CartView() {
                         <label className="block text-sm font-medium text-foreground/80 mb-2">
                           Transportista
                         </label>
-                        <div className="flex gap-2">
+                        <div className="flex flex-wrap gap-2">
                           <label className="flex items-center gap-2 cursor-pointer">
                             <input
                               type="radio"
@@ -193,6 +199,16 @@ export default function CartView() {
                               className="text-primary"
                             />
                             <span className="text-xs">Andreani</span>
+                          </label>
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name="provider"
+                              checked={selectedProvider === 'shipnow'}
+                              onChange={() => setSelectedProvider('shipnow')}
+                              className="text-primary"
+                            />
+                            <span className="text-xs">Shipnow</span>
                           </label>
                         </div>
                       </div>

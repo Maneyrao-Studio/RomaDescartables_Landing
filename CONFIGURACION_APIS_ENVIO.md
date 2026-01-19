@@ -98,6 +98,77 @@ ANDREANI_ORIGIN_CP=1424
 }
 ```
 
+## Shipnow
+
+### Registro y Credenciales
+
+1. **Contactar ventas**: Comunicarse con el equipo comercial de Shipnow
+2. **Registro**: Completar proceso de registro para servicios logísticos
+3. **Servicios disponibles**:
+   - **Shipfull**: Fulfillment completo
+   - **Ship2B**: Logística mayorista
+   - **Shipcross**: Crossdocking y última milla
+   - **Shipwow**: Campañas puntuales y one-shot
+
+4. **Obtener credenciales**:
+   - API Key
+   - URL base de la API
+   - Código postal de origen
+
+### Variables de Entorno Requeridas
+
+```env
+SHIPNOW_API_KEY=tu_clave_api_aqui
+SHIPNOW_API_URL=https://api.shipnow.com.ar/v1
+SHIPNOW_ORIGIN_CP=1424
+```
+
+### Endpoint de API
+
+- **Método**: POST
+- **URL**: `/quotes/shipping`
+- **Autenticación**: Bearer Token
+- **Content-Type**: application/json
+
+### Formato de Solicitud
+
+```json
+{
+  "origin": {
+    "postal_code": "1424",
+    "country": "AR"
+  },
+  "destination": {
+    "postal_code": "1754",
+    "country": "AR"
+  },
+  "package": {
+    "weight": 2.5,
+    "dimensions": {
+      "length": 30,
+      "width": 20,
+      "height": 15
+    },
+    "volume": 9000
+  },
+  "service_type": "standard"
+}
+```
+
+### Formato de Respuesta
+
+```json
+{
+  "total_cost": 1350.00,
+  "estimated_delivery": "1-2 días hábiles",
+  "service_type": "express",
+  "currency": "ARS",
+  "tracking_available": true,
+  "insurance_included": false,
+  "service_level": "standard"
+}
+```
+
 ## Configuración en Desarrollo
 
 ### Datos Simulados
