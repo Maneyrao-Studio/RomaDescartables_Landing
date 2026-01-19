@@ -3,6 +3,7 @@ import { ArrowRight, Package, Truck, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { PRODUCTS } from "@/lib/products"
 import ProductsSection from "./components/ProductsSection"
+import HeroCarousel from "@/components/ui/hero-carousel"
 
 interface LandingProps {
   onExploreClick: () => void
@@ -10,6 +11,27 @@ interface LandingProps {
 
 export default function Landing({ onExploreClick }: LandingProps) {
   const featuredProducts = PRODUCTS.slice(0, 4)
+
+  const carouselImages = [
+    {
+      src: "/tela-bolsa-45x40.jpg",
+      alt: "Bolsas de tela resistentes",
+      title: "Bolsas de Tela Premium",
+      description: "Resistentes y reutilizables para tu negocio"
+    },
+    {
+      src: "/bandeja-carton-blanca.jpg",
+      alt: "Bandejas de cartón",
+      title: "Bandejas de Cartón",
+      description: "Perfectas para alimentos y presentaciones"
+    },
+    {
+      src: "/RomaDescartable_LOGO.jpg",
+      alt: "Roma Descartables - Logo",
+      title: "Roma Descartables",
+      description: "Tu aliado en papelería y descartables"
+    }
+  ]
 
   return (
     <div className="bg-white">
@@ -33,14 +55,8 @@ export default function Landing({ onExploreClick }: LandingProps) {
               <ArrowRight className="w-5 h-5" />
             </Button>
           </div>
-          <div className="bg-accent/10 rounded-2xl p-8 flex items-center justify-center min-h-96">
-            <div className="text-center">
-              <div className="w-45 h-45 rounded-full mx-auto mb-6 flex items-center justify-center">
-                <img src='./RomaDescartable_LOGO.jpg' className="w-45 h-45 text-primary" />
-              </div>
-              <p className="text-primary font-semibold text-lg">Especialistas en papelería y descartables</p>
-              <p className="text-foreground/60 text-sm mt-2">Venta por mayor y menor</p>
-            </div>
+          <div className="bg-accent/10 rounded-2xl p-2 min-h-96">
+            <HeroCarousel images={carouselImages} />
           </div>
         </div>
       </section>
