@@ -10,3 +10,6 @@ export function useCart() {
   }
   return context
 }
+
+// Re-export types for convenience
+export type { CartItem, ShippingQuote, ShippingMethod } from "@/context/cart-context"
