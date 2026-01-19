@@ -37,8 +37,8 @@ export default function Landing({ onExploreClick }: LandingProps) {
           </div>
           <div className="bg-accent/10 rounded-2xl p-8 flex items-center justify-center min-h-96">
             <div className="text-center">
-              <div className="w-24 h-24 bg-accent rounded-full mx-auto mb-6 flex items-center justify-center">
-                <Package className="w-12 h-12 text-primary" />
+              <div className="w-45 h-45 rounded-full mx-auto mb-6 flex items-center justify-center">
+                <img src='./RomaDescartable_LOGO.jpg' className="w-45 h-45 text-primary" />
               </div>
               <p className="text-primary font-semibold text-lg">🏆 Distribuidora Roma Descartables</p>
               <p className="text-foreground/60 text-sm mt-2">Especialistas en papelería y descartables</p>

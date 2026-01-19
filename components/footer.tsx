@@ -1,4 +1,5 @@
 import { Phone, MapPin, Clock } from "lucide-react"
+import Logo from "./ui/logo"
 
 export default function Footer() {
   return (
@@ -7,16 +8,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-accent rounded flex items-center justify-center">
-                <span className="text-primary font-bold">RD</span>
-              </div>
-              <div>
-                <div className="font-bold text-sm">ROMA</div>
-                <div className="font-bold text-xs">DESCARTABLES</div>
-              </div>
-            </div>
-            <p className="text-white/80">Distribuidora de papelería y descartables con venta por mayor y menor.</p>
+            <Logo className="bg-muted" />
+            <p className="mt-4 text-white/80">Distribuidora de papelería y descartables con venta por mayor y menor.</p>
           </div>
 
           {/* Location */}
