@@ -1,7 +1,8 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { Trash2, Plus, Minus } from "lucide-react"
+import { useState } from "react"
+import { Trash2, Plus, Minus, Truck, MapPin, Loader2 } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
 import { formatPrice } from "@/lib/utils"
 import BackButton from "@/components/ui/back-button"
@@ -9,7 +10,20 @@ import { Button } from "@/components/ui/button"
 
 export default function CartView() {
   const router = useRouter()
-  const { items, removeItem, updateQuantity, getTotal, clearCart } = useCart()
+  const {
+    items,
+    shipping,
+    removeItem,
+    updateQuantity,
+    getTotal,
+    clearCart,
+    setShippingMethod,
+    setDestinationCP,
+    getShippingQuote,
+    getTotalWithShipping
+  } = useCart()
+
+  const [selectedProvider, setSelectedProvider] = useState<'correo_argentino' | 'andreani'>('correo_argentino')
 
   const handleCheckout = () => {
     if (items.length === 0) return
@@ -18,7 +32,16 @@ export default function CartView() {
       .map((item) => `- ${item.name} (x${item.quantity}) - ${formatPrice(item.price * item.quantity)}`)
       .join("%0A")
 
-    const message = `Hola Roma Descartables! Quiero hacer el siguiente pedido:%0A%0A${itemsList}%0A%0ATotal: ${formatPrice(getTotal())}`
+    let shippingInfo = ""
+    if (shipping.method === 'pickup') {
+      shippingInfo = "Envío: Retiro por sucursal"
+    } else if (shipping.quote) {
+      shippingInfo = `Envío: ${shipping.quote.provider === 'correo_argentino' ? 'Correo Argentino' : 'Andreani'} - ${formatPrice(shipping.quote.cost)} (${shipping.quote.estimatedDays} días)`
+    } else {
+      shippingInfo = "Envío: Por cotizar"
+    }
+
+    const message = `Hola Roma Descartables! Quiero hacer el siguiente pedido:%0A%0A${itemsList}%0A%0A${shippingInfo}%0A%0ATotal: ${formatPrice(getTotalWithShipping())}`
 
     window.open(`https://wa.me/5491132813830?text=${encodeURIComponent(message)}`, "_blank")
   }
@@ -100,6 +123,106 @@ export default function CartView() {
               <div className="bg-white rounded-lg p-6 border border-border sticky top-32">
                 <h2 className="text-xl font-bold text-primary mb-6">Resumen del Pedido</h2>
 
+                {/* Shipping Options */}
+                <div className="mb-6 p-4 bg-muted/50 rounded-lg">
+                  <h3 className="font-semibold text-primary mb-4 flex items-center gap-2">
+                    <Truck className="w-4 h-4" />
+                    Opción de envío
+                  </h3>
+
+                  <div className="space-y-3">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="shipping-method"
+                        checked={shipping.method === 'pickup'}
+                        onChange={() => setShippingMethod('pickup')}
+                        className="text-primary"
+                      />
+                      <span className="text-sm">Retiro por sucursal</span>
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="shipping-method"
+                        checked={shipping.method === 'quote'}
+                        onChange={() => setShippingMethod('quote')}
+                        className="text-primary"
+                      />
+                      <span className="text-sm">Cotizar envío a domicilio</span>
+                    </label>
+                  </div>
+
+                  {shipping.method === 'quote' && (
+                    <div className="mt-4 space-y-3">
+                      <div>
+                        <label className="block text-sm font-medium text-foreground/80 mb-1">
+                          Código postal de destino
+                        </label>
+                        <input
+                          type="text"
+                          value={shipping.destinationCP}
+                          onChange={(e) => setDestinationCP(e.target.value)}
+                          placeholder="Ej: 1754"
+                          className="w-full px-3 py-2 border border-border rounded-md text-sm"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-foreground/80 mb-2">
+                          Transportista
+                        </label>
+                        <div className="flex gap-2">
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name="provider"
+                              checked={selectedProvider === 'correo_argentino'}
+                              onChange={() => setSelectedProvider('correo_argentino')}
+                              className="text-primary"
+                            />
+                            <span className="text-xs">Correo Argentino</span>
+                          </label>
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name="provider"
+                              checked={selectedProvider === 'andreani'}
+                              onChange={() => setSelectedProvider('andreani')}
+                              className="text-primary"
+                            />
+                            <span className="text-xs">Andreani</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={() => getShippingQuote(selectedProvider)}
+                        disabled={shipping.isLoading || !shipping.destinationCP}
+                        className="w-full"
+                        size="sm"
+                      >
+                        {shipping.isLoading ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Calculando...
+                          </>
+                        ) : (
+                          <>
+                            <MapPin className="w-4 h-4 mr-2" />
+                            Calcular envío
+                          </>
+                        )}
+                      </Button>
+
+                      {shipping.error && (
+                        <p className="text-red-600 text-xs mt-2">{shipping.error}</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
                 <div className="space-y-4 mb-6 pb-6 border-b border-border">
                   <div className="flex justify-between text-foreground/60">
                     <span>Subtotal:</span>
@@ -107,13 +230,21 @@ export default function CartView() {
                   </div>
                   <div className="flex justify-between text-foreground/60">
                     <span>Envío:</span>
-                    <span>Consultar</span>
+                    <span>
+                      {shipping.method === 'pickup' ? (
+                        'Retiro por sucursal'
+                      ) : shipping.quote ? (
+                        `${formatPrice(shipping.quote.cost)} (${shipping.quote.estimatedDays})`
+                      ) : (
+                        'Por calcular'
+                      )}
+                    </span>
                   </div>
                 </div>
 
                 <div className="flex justify-between text-2xl font-bold text-primary mb-6">
                   <span>Total:</span>
-                  <span>{formatPrice(getTotal())}</span>
+                  <span>{formatPrice(getTotalWithShipping())}</span>
                 </div>
 
                 <Button onClick={handleCheckout} className="w-full mb-3">
