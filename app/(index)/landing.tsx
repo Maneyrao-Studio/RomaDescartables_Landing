@@ -1,6 +1,5 @@
 "use client"
-import { ArrowRight, Package, Truck, Award } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Package, Truck, Award } from "lucide-react"
 import { PRODUCTS } from "@/lib/products"
 import ProductsSection from "./components/ProductsSection"
 import HeroCarousel from "@/components/ui/hero-carousel"
@@ -21,42 +20,21 @@ export default function Landing({ onExploreClick }: LandingProps) {
       src: "/carrusel-2.webp",
       alt: "",
     },
-    {
-      src: "/RomaDescartable_LOGO.jpg",
-      alt: "Roma Descartables - Logo",
-    }
   ]
 
   return (
     <div className="bg-white">
-      {/* Hero Section */}
-      <section className="pb-20 md:pb-32">
-        {/* Carousel ocupando 100% del ancho */}
-        <div className="w-full h-96 md:h-[500px] lg:h-[600px] mb-12">
-          <HeroCarousel images={carouselImages} />
-        </div>
-
-        {/* Textos abajo del carousel */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6 leading-tight">
-              Papelería y Descartables de Calidad
-            </h1>
-            <p className="text-lg text-foreground/70 mb-4">
-              Distribuidora Roma Descartables ofrece los mejores productos para tu negocio. Venta por mayor y menor en
-              San Justo, La Matanza.
-            </p>
-            <p className="text-lg text-foreground/70 mb-8">
-              Bolsas de tela, bandejas de cartón y mucho más. Todos nuestros productos están pensados para tu
-              conveniencia.
-            </p>
-            <Button onClick={onExploreClick} size="lg" className="mx-auto">
-              Explorar Catálogo
-              <ArrowRight className="w-5 h-5" />
-            </Button>
-          </div>
-        </div>
-      </section>
+      <div className="w-full h-96 md:h-[500px] lg:h-[600px]">
+        <HeroCarousel images={carouselImages} />
+      </div>
+      
+      <ProductsSection
+        title="Novedades"
+        description="Descubre lo último en productos innovadores y exclusivos."
+        products={featuredProducts}
+        className="bg-section-contrast text-section-contrast-foreground"
+        onExploreClick={onExploreClick}
+      />
 
       <section className="bg-secondary text-secondary-foreground py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,16 +85,6 @@ export default function Landing({ onExploreClick }: LandingProps) {
           </div>
         </div>
       </section>
-
-
-      {/* Featured Products Section */}
-      <ProductsSection
-        title="Novedades"
-        description="Descubre lo último en productos innovadores y exclusivos."
-        products={featuredProducts}
-        className="bg-section-contrast text-section-contrast-foreground"
-        onExploreClick={onExploreClick}
-      />
 
       {/* Features Section */}
       <section className="bg-primary text-white py-16">
