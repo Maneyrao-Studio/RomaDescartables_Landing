@@ -1,16 +1,14 @@
 "use client"
-import { useRouter } from "next/navigation"
 import { ArrowRight, Package, Truck, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import ProductCard from "@/components/ui/product-card"
 import { PRODUCTS } from "@/lib/products"
+import ProductsSection from "./components/ProductsSection"
 
 interface LandingProps {
   onExploreClick: () => void
 }
 
 export default function Landing({ onExploreClick }: LandingProps) {
-  const router = useRouter()
   const featuredProducts = PRODUCTS.slice(0, 4)
 
   return (
@@ -40,12 +38,72 @@ export default function Landing({ onExploreClick }: LandingProps) {
               <div className="w-45 h-45 rounded-full mx-auto mb-6 flex items-center justify-center">
                 <img src='./RomaDescartable_LOGO.jpg' className="w-45 h-45 text-primary" />
               </div>
-              <p className="text-primary font-semibold text-lg">🏆 Distribuidora Roma Descartables</p>
-              <p className="text-foreground/60 text-sm mt-2">Especialistas en papelería y descartables</p>
+              <p className="text-primary font-semibold text-lg">Especialistas en papelería y descartables</p>
+              <p className="text-foreground/60 text-sm mt-2">Venta por mayor y menor</p>
             </div>
           </div>
         </div>
       </section>
+
+      <section className="bg-secondary text-secondary-foreground py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <header className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold pb-2">
+              Nuestras Categorías
+            </h2>
+            <p className="text-black/80">Encuentra todo lo que necesitas en un solo lugar</p>
+         </header>
+          <div className="grid md:grid-cols-3 gap-8">
+
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer px-4 py-6 flex flex-col items-center text-center group">
+              <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden">
+                <img 
+                  src="/tela-bolsa-45x40.jpg" 
+                  alt="" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"  
+                />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Bandejas y envases desechables</h3>
+              <p className="text-black/80">Bandejas de aluminio, bandejas de cartón, bandejas plástica, platos y discos dorados, entre otros.</p>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer px-4 py-6 flex flex-col items-center text-center group">
+              <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden">
+                <img 
+                  src="/tela-bolsa-45x40.jpg" 
+                  alt="" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"  
+                />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Bolsas y empaques</h3>
+              <p className="text-black/80">Bolsas de polipropileno, bolsas de tela, bolsas kraft, bolsas de papel, bolsas riñón y rollos de arranque.</p>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer px-4 py-6 flex flex-col items-center text-center group">
+              <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden ">
+                <img 
+                  src="/tela-bolsa-45x40.jpg" 
+                  alt="" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"  
+                />
+              </div>
+              <h3 className="text-xl font-bold mb-2">Artículos de librería y papelería</h3>
+              <p className="text-black/80">Cuadernos, carpetas, calculadoras, marcadores, cintas adhesivas y otros materiales de oficina.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* Featured Products Section */}
+      <ProductsSection
+        title="Novedades"
+        description="Descubre lo último en productos innovadores y exclusivos."
+        products={featuredProducts}
+        className="bg-section-contrast text-section-contrast-foreground"
+        onExploreClick={onExploreClick}
+      />
 
       {/* Features Section */}
       <section className="bg-primary text-white py-16">
@@ -70,31 +128,20 @@ export default function Landing({ onExploreClick }: LandingProps) {
         </div>
       </section>
 
-      {/* Featured Products Section */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Productos Destacados</h2>
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-              Descubre nuestros productos más populares y de mayor demanda
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onClick={() => router.push(`/producto/${product.id}`)}
-              />
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <Button onClick={onExploreClick} size="lg">
-              Ver Catálogo
-            </Button>
-          </div>
-        </div>
-      </section>
+      <ProductsSection 
+        title="Productos Destacados"
+        description="Descubre nuestros productos más populares y de mayor demanda"
+        products={featuredProducts}
+        onExploreClick={onExploreClick}
+      />
+      <ProductsSection 
+        title="Ofertas Populares"
+        description="Aprovecha los productos más elegidos a precios imparables."
+        className="bg-secondary text-secondary-foreground"
+        products={featuredProducts}
+        onExploreClick={onExploreClick}
+      />
+
 
       {/* Location Section */}
       <section className="bg-muted py-16">

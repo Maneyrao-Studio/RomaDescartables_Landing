@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Header from "@/components/header"
-import Landing from "@/components/landing"
+import Landing from "@/app/(index)/landing"
 import Footer from "@/components/footer"
 
 type PageView = "landing"
