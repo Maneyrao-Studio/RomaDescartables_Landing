@@ -1,18 +1,34 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { PRODUCTS, Product } from "@/lib/products"
 import ProductCard from "@/components/ui/product-card"
 
-export default function Catalog() {
+interface CatalogProps {
+  categoriaFilter?: string
+}
+
+export default function Catalog({ categoriaFilter }: CatalogProps) {
   const router = useRouter()
-  const [selectedCategory, setSelectedCategory] = useState<string>("All")
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoriaFilter || "All")
+
+  // Update selected category when categoriaFilter changes
+  useEffect(() => {
+    if (categoriaFilter) {
+      setSelectedCategory(categoriaFilter)
+    } else if (!categoriaFilter) {
+      setSelectedCategory("All")
+    }
+  }, [categoriaFilter])
 
   const categories = ["All", ...new Set(PRODUCTS.map((p) => p.category))]
 
+  // Use categoriaFilter directly if present, otherwise use selectedCategory
+  const currentCategory = categoriaFilter || selectedCategory
+
   const filteredProducts =
-    selectedCategory === "All" ? PRODUCTS : PRODUCTS.filter((p) => p.category === selectedCategory)
+    currentCategory === "All" ? PRODUCTS : PRODUCTS.filter((p) => p.category === currentCategory)
 
   return (
     <div className="bg-background min-h-screen">
@@ -25,19 +41,32 @@ export default function Catalog() {
 
         {/* Filters */}
         <div className="mb-12 flex flex-wrap gap-3">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-6 py-2 rounded-full font-medium transition-colors ${
-                selectedCategory === cat
-                  ? "bg-primary text-white"
-                  : "bg-white text-primary border-2 border-primary hover:bg-primary/5"
-              }`}
-            >
-              {cat === "All" ? "Todos" : cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const isActive = currentCategory === cat
+            return (
+              <button
+                key={cat}
+                onClick={() => {
+                  setSelectedCategory(cat)
+                  // If we have a categoriaFilter from URL and user clicks "All", remove the filter
+                  if (categoriaFilter && cat === "All") {
+                    router.push('/catalogo', { scroll: false })
+                  }
+                  // If user clicks a specific category, update URL if we're not already there
+                  else if (cat !== "All" && !categoriaFilter) {
+                    router.push(`/catalogo?categoria=${encodeURIComponent(cat)}`, { scroll: false })
+                  }
+                }}
+                className={`px-6 py-2 rounded-full font-medium transition-colors ${
+                  isActive
+                    ? "bg-primary text-white"
+                    : "bg-white text-primary border-2 border-primary hover:bg-primary/5"
+                }`}
+              >
+                {cat === "All" ? "Todos" : cat}
+              </button>
+            )
+          })}
         </div>
 
         {/* Products Grid */}

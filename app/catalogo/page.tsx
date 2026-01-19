@@ -1,12 +1,17 @@
-"use client"
-
+import { use } from 'react'
 import PageLayout from "@/components/ui/page-layout"
 import Catalog from "@/components/catalog"
 
-export default function CatalogoPage() {
+interface CatalogoPageProps {
+  searchParams: Promise<{ categoria?: string }>
+}
+
+export default function CatalogoPage({ searchParams }: CatalogoPageProps) {
+  const params = use(searchParams)
+
   return (
     <PageLayout>
-      <Catalog />
+      <Catalog categoriaFilter={params.categoria} />
     </PageLayout>
   )
 }
