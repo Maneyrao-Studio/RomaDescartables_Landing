@@ -33,7 +33,6 @@ interface ProductDetailProps {
 function calculatePackPrice(packs: Pack[] | undefined, quantity: number, regularPrice: number): number {
   if (!packs || packs.length === 0) return regularPrice * quantity
 
-  // Sort packs by quantity descending
   const sortedPacks = [...packs].sort((a, b) => b.quantity - a.quantity)
   let total = 0
   let remainingQuantity = quantity
@@ -44,7 +43,6 @@ function calculatePackPrice(packs: Pack[] | undefined, quantity: number, regular
     remainingQuantity -= packCount * pack.quantity
   }
 
-  // Add remaining at regular price
   total += remainingQuantity * regularPrice
   return total
 }
@@ -70,17 +68,17 @@ export default function ProductDetail({ product }: ProductDetailProps) {
      toast.success('Producto agregado al carrito')
     }
   return (
-     <div className="min-h-screen">
+     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <BackButton href="/catalogo" text="Volver al Catálogo" />
 
-        <div className="bg-white/70 backdrop-blur-xl rounded-[2rem] shadow-lg overflow-hidden">
-          <div className="grid md:grid-cols-2">
-            <div className="relative p-8 lg:p-12">
+        <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="relative p-8 lg:p-12 bg-gray-50">
               <img
                 src={product.image}
                 alt={product.name}
-                className="relative z-10 w-full max-w-sm mx-auto aspect-square object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                className="w-full max-w-sm mx-auto aspect-square object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
               />
             </div>
 
@@ -93,24 +91,22 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 {product.name}
               </h1>
 
-              <p className="text-base text-gray-600 leading-relaxed mb-8">
+              <p className="text-xl text-gray-600 leading-relaxed mb-8">
                 {product.description}
               </p>
 
               <div className="mb-8">
-                <span className="text-base text-gray-500 mb-1 block">Precio</span>
+                <span className="text-lg text-gray-500 mb-1 block">Precio</span>
                 <div className="flex items-baseline gap-3">
-                  <span className="text-4xl font-bold text-black">
+                  <span className="text-3xl font-bold text-black">
                     {formatPrice(product.price)}
                   </span>
                 </div>
               </div>
 
-              <section className="bg-gray-50 p-2">
-
-                {product.packs && product.packs.length > 0 && (
-                <div className="mb-8">
-                  <span className="text-base text-gray-500 mb-3 block">¡Ahorra con packs!</span>
+              {product.packs && product.packs.length > 0 && (
+                <div className="mb-8 p-6 bg-secondary rounded-2xl">
+                  <span className="text-base text-gray-900 mb-3 block font-bold">¡Ahorra con packs!</span>
                    <div className="flex flex-wrap gap-2">
                     {product.packs.map((pack, idx) => (
                       <button
@@ -118,8 +114,8 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                         onClick={() => setQuantity(pack.quantity)}
                         className={`relative px-4 py-3 rounded-2xl border-2 transition-all ${
                           quantity === pack.quantity
-                            ? "border-black bg-accent text-white"
-                            : "border-gray-400 hover:border-gray-700 bg-white"
+                            ? "border-gray-900 bg-gray-900 shadow-lg scale-105"
+                            : "border-gray-300 bg-white hover:border-gray-400 hover:shadow-md"
                         }`}
                       >
                         {quantity === pack.quantity && (
@@ -142,37 +138,44 @@ export default function ProductDetail({ product }: ProductDetailProps) {
               )}
 
               <div className="flex items-center gap-4 mb-8">
-                <span className="text-sm text-gray-500">Cantidad</span>
-                <div className="flex items-center bg-gray-100 rounded-full">
+                <span className="text-lg text-gray-700">Cantidad</span>
+                <div className="flex items-center bg-gray-300 rounded-full">
                   <button
                     onClick={() => handleQuantityChange(-1)}
-                    className="p-3 text-gray-500 hover:text-purple-600 transition-colors"
+                    className="p-3 text-black hover:text-purple-600 transition-colors"
+                    aria-label="Menos"
                   >
-                    <Minus className="w-5 h-5" />
+                    <Minus className="w-6 h-6" />
                   </button>
-                  <span className="w-10 text-center font-bold text-gray-900">{quantity}</span>
+                  <input
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                    className="w-10 text-center text-lg font-bold text-gray-900 bg-transparent border-none outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    min="1"
+                  />
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    className="p-3 text-gray-500 hover:text-purple-600 transition-colors"
+                    className="p-3 text-black hover:text-purple-600 transition-colors"
+                    aria-label="Mas"
                   >
-                    <Plus className="w-5 h-5" />
+                    <Plus className="w-6 h-6" />
                   </button>
                 </div>
               </div>
 
               <div className="mt-auto">
-                <div className="flex items-center justify-between mb-6 p-4 bg-gray-100 rounded-2xl">
-                  <span className="text-gray-700">Total</span>
-                  <span className="text-2xl font-bold text-gray-900">
+                <div className="flex items-center justify-between mb-6 p-4 bg-gray-300 rounded-2xl">
+                  <span className="text-xl text-gray-700">Total</span>
+                  <span className="text-3xl font-bold text-black">
                     {formatPrice(calculatePackPrice(product.packs, quantity, product.price))}
                   </span>
                 </div>
 
-                 <Button onClick={handleAddToCart} className="w-full mb-4">
+                 <Button onClick={handleAddToCart} className="text-xl py-6 w-full font-bold" size="lg">
                    ¡Lo quiero!
                  </Button>
               </div>
-              </section>
             </div>
           </div>
         </div>
