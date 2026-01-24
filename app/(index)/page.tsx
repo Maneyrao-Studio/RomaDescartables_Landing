@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import Header from "@/components/header"
 import Landing from "@/app/(index)/landing"
 import Footer from "@/components/footer"
+import PromotionBanner from "@/components/ui/promotion-banner"
 
 type PageView = "landing"
 
@@ -26,6 +27,7 @@ function HomeContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
+      <PromotionBanner />
       <Header />
 
       <main className="flex-1">

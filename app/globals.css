@@ -15,6 +15,8 @@
   --primary-foreground: oklch(0.98 0 0);
   --secondary: oklch(0.8 0.2 71.74);
   --secondary-foreground: oklch(0.15 0 0);
+  --section-contrast: oklch(0.884 0.108 81.456);
+  --section-contrast-foreground: oklch(0.039 0 0);
   --muted: oklch(0.9 0 0);
   --muted-foreground: oklch(0.5 0 0);
   --accent: oklch(0.8 0.2 71.74);
@@ -88,6 +90,8 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --secondary: oklch(0.773 0.124 71.235);
+  --secondary-foreground: oklch(0.039 0 0);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -123,4 +127,19 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.33%);
+  }
+}
+
+.animate-scroll-text {
+  animation: scroll-text 15s linear infinite;
+  display: flex;
+  width: max-content;
 }
