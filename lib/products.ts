@@ -1,3 +1,8 @@
+export interface Pack {
+  quantity: number
+  price: number
+}
+
 export interface Product {
   id: string
   name: string
@@ -6,6 +11,7 @@ export interface Product {
   image: string
   category: string
   specs?: string[]
+  packs?: Pack[]
 }
 
 export const PRODUCTS: Product[] = [
@@ -17,6 +23,10 @@ export const PRODUCTS: Product[] = [
     image: "/tela-bolsa-15x26.jpg",
     category: "Bolsas de Tela",
     specs: ["Dimensiones: 15 x 26.5 cm", "Material: Tela 100%", "Reutilizable", "Resistente"],
+    packs: [
+      { quantity: 10, price: 850 },
+      { quantity: 50, price: 4000 }
+    ],
   },
   {
     id: "bolsa-tela-2",
@@ -53,6 +63,10 @@ export const PRODUCTS: Product[] = [
     image: "/bandeja-carton-blanca.jpg",
     category: "Bandejas de Cartón",
     specs: ["Tamaño: N.6", "Color: Blanco", "Material: Cartón reforzado", "Referencia REF"],
+    packs: [
+      { quantity: 100, price: 580000 },
+      { quantity: 500, price: 2700000 }
+    ],
   },
   {
     id: "bandeja-carton-2",

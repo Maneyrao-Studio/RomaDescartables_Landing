@@ -6,6 +6,26 @@ import { useCart } from "@/hooks/use-cart"
 import { formatPrice } from "@/lib/utils"
 import BackButton from "@/components/ui/back-button"
 import { Button } from "@/components/ui/button"
+import { Pack } from "@/context/cart-context"
+
+function calculatePackPrice(packs: Pack[] | undefined, quantity: number, regularPrice: number): number {
+  if (!packs || packs.length === 0) return regularPrice * quantity
+
+  // Sort packs by quantity descending
+  const sortedPacks = [...packs].sort((a, b) => b.quantity - a.quantity)
+  let total = 0
+  let remainingQuantity = quantity
+
+  for (const pack of sortedPacks) {
+    const packCount = Math.floor(remainingQuantity / pack.quantity)
+    total += packCount * pack.price
+    remainingQuantity -= packCount * pack.quantity
+  }
+
+  // Add remaining at regular price
+  total += remainingQuantity * regularPrice
+  return total
+}
 
 export default function CartView() {
   const router = useRouter()
@@ -15,7 +35,7 @@ export default function CartView() {
     if (items.length === 0) return
 
     const itemsList = items
-      .map((item) => `- ${item.name} (x${item.quantity}) - ${formatPrice(item.price * item.quantity)}`)
+      .map((item) => `- ${item.name} (x${item.quantity}) - ${formatPrice(calculatePackPrice(item.packs, item.quantity, item.price))}`)
       .join("%0A")
 
     const message = `Hola Roma Descartables! Quiero hacer el siguiente pedido:%0A%0A${itemsList}%0A%0ATotal: ${formatPrice(getTotal())}`
@@ -57,7 +77,10 @@ export default function CartView() {
                     {/* Product Info */}
                     <div className="flex-1">
                       <h3 className="font-bold text-primary mb-2">{item.name}</h3>
-                      <p className="text-foreground/60 text-sm mb-4">{formatPrice(item.price)} c/u</p>
+                       <p className="text-foreground/60 text-sm mb-4">{formatPrice(item.price)} c/u</p>
+                       {item.packs && item.packs.length > 0 && (
+                         <p className="text-green-600 text-xs">Pack aplicado</p>
+                       )}
 
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-2">
@@ -87,7 +110,7 @@ export default function CartView() {
                       </button>
                       <div>
                         <p className="text-foreground/60 text-xs mb-1">Subtotal</p>
-                        <p className="text-xl font-bold text-primary">{formatPrice(item.price * item.quantity)}</p>
+                         <p className="text-xl font-bold text-primary">{formatPrice(calculatePackPrice(item.packs, item.quantity, item.price))}</p>
                       </div>
                     </div>
                   </div>

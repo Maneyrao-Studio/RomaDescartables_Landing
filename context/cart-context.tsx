@@ -2,12 +2,18 @@
 
 import { createContext, useState, useCallback, useEffect, type ReactNode } from "react"
 
+export interface Pack {
+  quantity: number
+  price: number
+}
+
 export interface CartItem {
   id: string
   name: string
   price: number
   quantity: number
   image: string
+  packs?: Pack[]
 }
 
 interface CartContextType {
@@ -71,8 +77,27 @@ export function CartProvider({ children }: CartProviderProps) {
     setItems([])
   }, [])
 
+  const calculatePackPrice = (packs: Pack[] | undefined, quantity: number, regularPrice: number): number => {
+    if (!packs || packs.length === 0) return regularPrice * quantity
+
+    // Sort packs by quantity descending
+    const sortedPacks = [...packs].sort((a, b) => b.quantity - a.quantity)
+    let total = 0
+    let remainingQuantity = quantity
+
+    for (const pack of sortedPacks) {
+      const packCount = Math.floor(remainingQuantity / pack.quantity)
+      total += packCount * pack.price
+      remainingQuantity -= packCount * pack.quantity
+    }
+
+    // Add remaining at regular price
+    total += remainingQuantity * regularPrice
+    return total
+  }
+
   const getTotal = useCallback(() => {
-    return items.reduce((total, item) => total + item.price * item.quantity, 0)
+    return items.reduce((total, item) => total + calculatePackPrice(item.packs, item.quantity, item.price), 0)
   }, [items])
 
   const getItemCount = useCallback(() => {
