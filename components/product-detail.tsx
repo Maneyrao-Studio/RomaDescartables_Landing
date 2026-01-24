@@ -2,12 +2,17 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Plus, Minus } from "lucide-react"
+import { Minus, Plus, ShoppingCart, Zap, RotateCcw, Headphones, ArrowLeft } from "lucide-react";
 import { toast } from "sonner"
 import { useCart } from "@/hooks/use-cart"
 import { formatPrice } from "@/lib/utils"
-import BackButton from "@/components/ui/back-button"
-import { Button } from "@/components/ui/button"
+import { Button } from "./ui/button";
+import BackButton from "./ui/back-button";
+
+interface Pack {
+  quantity: number
+  price: number
+}
 
 interface Product {
   id: string
@@ -17,6 +22,7 @@ interface Product {
   image: string
   category: string
   specs?: string[]
+  packs?: Pack[]
   quantity?: number
 }
 
@@ -24,117 +30,151 @@ interface ProductDetailProps {
   product: Product
 }
 
+function calculatePackPrice(packs: Pack[] | undefined, quantity: number, regularPrice: number): number {
+  if (!packs || packs.length === 0) return regularPrice * quantity
+
+  // Sort packs by quantity descending
+  const sortedPacks = [...packs].sort((a, b) => b.quantity - a.quantity)
+  let total = 0
+  let remainingQuantity = quantity
+
+  for (const pack of sortedPacks) {
+    const packCount = Math.floor(remainingQuantity / pack.quantity)
+    total += packCount * pack.price
+    remainingQuantity -= packCount * pack.quantity
+  }
+
+  // Add remaining at regular price
+  total += remainingQuantity * regularPrice
+  return total
+}
+
 export default function ProductDetail({ product }: ProductDetailProps) {
   const router = useRouter()
   const [quantity, setQuantity] = useState(1)
   const { addItem } = useCart()
 
-  const handleAddToCart = () => {
-    addItem({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: quantity,
-      image: product.image,
-    })
-    toast.success('Producto agregado al carrito')
-  }
-
   const handleQuantityChange = (delta: number) => {
-    setQuantity(Math.max(1, quantity + delta))
-  }
+    setQuantity(Math.max(1, quantity + delta));
+  };
 
+   const handleAddToCart = () => {
+     addItem({
+       id: product.id,
+       name: product.name,
+       price: product.price,
+       quantity: quantity,
+       image: product.image,
+       packs: product.packs,
+     })
+     toast.success('Producto agregado al carrito')
+    }
   return (
-    <div className="bg-background min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Back Button */}
+     <div className="min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <BackButton href="/catalogo" text="Volver al Catálogo" />
 
-        {/* Product Details */}
-        <div className="grid md:grid-cols-2 gap-12 bg-white rounded-lg p-8 shadow-sm">
-          {/* Image */}
-          <div className="flex items-center justify-center bg-muted rounded-lg overflow-hidden min-h-96">
-            <img src={product.image || "/placeholder.svg"} alt={product.name} className="w-full h-full object-cover" />
-          </div>
-
-          {/* Info */}
-          <div className="flex flex-col justify-between">
-            <div>
-              <p className="text-accent text-sm font-semibold mb-2">{product.category}</p>
-              <h1 className="text-4xl font-bold text-primary mb-4">{product.name}</h1>
-              <p className="text-foreground/70 text-lg mb-8">{product.description}</p>
-
-              {/* Specs */}
-              {product.specs && product.specs.length > 0 && (
-                <div className="mb-8">
-                  <h3 className="text-lg font-bold text-primary mb-4">Características</h3>
-                  <ul className="space-y-2">
-                    {product.specs.map((spec, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-foreground/70">
-                        <span className="w-2 h-2 bg-accent rounded-full"></span>
-                        {spec}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+        <div className="bg-white/70 backdrop-blur-xl rounded-[2rem] shadow-lg overflow-hidden">
+          <div className="grid md:grid-cols-2">
+            <div className="relative p-8 lg:p-12">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="relative z-10 w-full max-w-sm mx-auto aspect-square object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+              />
             </div>
 
-            {/* Purchase Section */}
-            <div className="border-t border-border pt-8">
-              {/* Price */}
-              <div className="mb-6">
-                <p className="text-foreground/60 text-sm mb-2">Precio unitario</p>
-                <div className="text-4xl font-bold text-primary">{formatPrice(product.price)}</div>
+            <div className="p-4 lg:p-8 flex flex-col">
+              <span className="inline-flex self-start text-black text-base font-bold py-1.5 rounded-full mb-4">
+                {product.category}
+              </span>
+
+              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                {product.name}
+              </h1>
+
+              <p className="text-base text-gray-600 leading-relaxed mb-8">
+                {product.description}
+              </p>
+
+              <div className="mb-8">
+                <span className="text-base text-gray-500 mb-1 block">Precio</span>
+                <div className="flex items-baseline gap-3">
+                  <span className="text-4xl font-bold text-black">
+                    {formatPrice(product.price)}
+                  </span>
+                </div>
               </div>
 
-              {/* Quantity */}
-              <div className="mb-6">
-                <p className="text-foreground/60 text-sm mb-3">Cantidad</p>
-                <div className="flex items-center border-2 border-primary rounded-lg w-fit">
+              <section className="bg-gray-50 p-2">
+
+                {product.packs && product.packs.length > 0 && (
+                <div className="mb-8">
+                  <span className="text-base text-gray-500 mb-3 block">¡Ahorra con packs!</span>
+                   <div className="flex flex-wrap gap-2">
+                    {product.packs.map((pack, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setQuantity(pack.quantity)}
+                        className={`relative px-4 py-3 rounded-2xl border-2 transition-all ${
+                          quantity === pack.quantity
+                            ? "border-black bg-accent text-white"
+                            : "border-gray-400 hover:border-gray-700 bg-white"
+                        }`}
+                      >
+                        {quantity === pack.quantity && (
+                          <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                        )}
+                        <div className={`text-lg font-extrabold ${quantity === pack.quantity ? "text-white" : "text-gray-900"}`}>
+                          {pack.quantity}x
+                        </div>
+                        <div className={`text-base font-medium ${quantity === pack.quantity ? "text-white/90" : "text-black"}`}>
+                          {formatPrice(pack.price)}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex items-center gap-4 mb-8">
+                <span className="text-sm text-gray-500">Cantidad</span>
+                <div className="flex items-center bg-gray-100 rounded-full">
                   <button
                     onClick={() => handleQuantityChange(-1)}
-                    className="p-2 hover:bg-muted transition-colors text-primary"
+                    className="p-3 text-gray-500 hover:text-purple-600 transition-colors"
                   >
                     <Minus className="w-5 h-5" />
                   </button>
-                  <span className="px-6 py-2 font-bold text-primary text-lg">{quantity}</span>
+                  <span className="w-10 text-center font-bold text-gray-900">{quantity}</span>
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    className="p-2 hover:bg-muted transition-colors text-primary"
+                    className="p-3 text-gray-500 hover:text-purple-600 transition-colors"
                   >
                     <Plus className="w-5 h-5" />
                   </button>
                 </div>
               </div>
 
-              {/* Total */}
-              <div className="bg-muted p-4 rounded-lg mb-6">
-                <p className="text-foreground/60 text-sm mb-1">Total</p>
-                <p className="text-2xl font-bold text-primary">{formatPrice(product.price * quantity)}</p>
+              <div className="mt-auto">
+                <div className="flex items-center justify-between mb-6 p-4 bg-gray-100 rounded-2xl">
+                  <span className="text-gray-700">Total</span>
+                  <span className="text-2xl font-bold text-gray-900">
+                    {formatPrice(calculatePackPrice(product.packs, quantity, product.price))}
+                  </span>
+                </div>
+
+                 <Button onClick={handleAddToCart} className="w-full mb-4">
+                   ¡Lo quiero!
+                 </Button>
               </div>
-
-              {/* CTA Buttons */}
-              <Button onClick={handleAddToCart} className="w-full mb-4">
-                Agregar al Carrito
-              </Button>
-
-              <p className="text-center text-foreground/60 text-sm">
-                También puedes contactarnos directamente por WhatsApp para consultas sobre precios mayoristas.
-              </p>
+              </section>
             </div>
           </div>
-        </div>
-
-        {/* Info Box */}
-        <div className="mt-12 bg-accent/10 border-l-4 border-accent p-6 rounded">
-          <h3 className="font-bold text-primary mb-2">📍 ¿Dónde estamos?</h3>
-          <p className="text-foreground/70 mb-3">
-            Distribuidora Roma Descartables se encuentra en San Justo, Zona Oeste, La Matanza.
-          </p>
-          <p className="text-foreground/60 text-sm">
-            Realizamos envíos y atendemos consultas sobre precios para compras en volumen.
-          </p>
         </div>
       </div>
     </div>
