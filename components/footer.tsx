@@ -19,7 +19,8 @@ export default function Footer() {
               <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
               <div className="text-white/80">
                 <p className="font-semibold">San Justo</p>
-                <p className="text-sm">Zona Oeste, La Matanza</p>
+                <p className="text-sm">Jujuy 2983 y Tomás Justo Villegas</p>
+                <p className="text-sm">La Matanza, Buenos Aires</p>
               </div>
             </div>
             <div className="flex gap-3">
@@ -54,8 +55,8 @@ export default function Footer() {
                 Instagram
               </a>
             </div>
-            <p className="text-white/80 text-sm">📲 Hace tu pedido directo por WhatsApp</p>
-            <p className="text-white/80 text-sm">📸 Síguenos en Instagram para novedades</p>
+            <p className="text-white/80 text-sm">Hace tu pedido directo por WhatsApp</p>
+            <p className="text-white/80 text-sm">Síguenos en Instagram para novedades</p>
           </div>
         </div>
 
