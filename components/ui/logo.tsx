@@ -9,7 +9,7 @@ export default function Logo({ className }: LogoProps) {
   return (
     <Link href="/" className={cn("flex items-center gap-2 hover:opacity-80 transition-opacity", className)}>
       <div className="w-10 h-10 bg-muted rounded flex items-center justify-center">
-        <img src='./RomaDescartable_LOGO.jpg' className="w-10 h-10 text-primary" />
+        <img src='/RomaDescartable_LOGO.jpg' className="w-10 h-10 text-primary" />
       </div>
       <div className="hidden sm:block">
         <div className="font-bold text-sm leading-none text-primary">ROMA</div>
