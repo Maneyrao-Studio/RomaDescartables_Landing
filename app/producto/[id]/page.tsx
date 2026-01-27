@@ -1,17 +1,33 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import { notFound } from "next/navigation"
+import { useParams } from "next/navigation"
 import PageLayout from "@/components/ui/page-layout"
 import ProductDetail from "@/components/product-detail"
-import { PRODUCTS } from "@/lib/products"
+import { useProduct } from "@/lib/hooks/useProducts"
 
-interface ProductPageProps {
-  params: Promise<{ id: string }>
-}
+export default function ProductPage() {
+  const params = useParams()
+  const id = params.id as string
+  
+  const { data: product, isLoading, error } = useProduct(id)
 
-export default async function ProductPage({ params }: ProductPageProps) {
-  const { id } = await params
-  const product = PRODUCTS.find(p => p.id === id)
+  if (isLoading) {
+    return (
+      <PageLayout>
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="animate-pulse text-center">
+            <div className="w-32 h-32 bg-gray-200 rounded-lg mx-auto mb-4"></div>
+            <div className="h-8 bg-gray-200 rounded mb-2 w-64 mx-auto"></div>
+            <div className="h-4 bg-gray-200 rounded w-48 mx-auto"></div>
+          </div>
+        </div>
+      </PageLayout>
+    )
+  }
 
-  if (!product) {
+  if (error || !product) {
     notFound()
   }
 
@@ -21,31 +37,3 @@ export default async function ProductPage({ params }: ProductPageProps) {
     </PageLayout>
   )
 }
-
-export function generateStaticParams() {
-  return PRODUCTS.map((product) => ({
-    id: product.id,
-  }))
-}
-
-export async function generateMetadata({ params }: ProductPageProps) {
-  const { id } = await params
-  const product = PRODUCTS.find(p => p.id === id)
-
-  if (!product) {
-    return {
-      title: 'Producto no encontrado',
-    }
-  }
-
-  return {
-    title: `${product.name} - Roma Descartables`,
-    description: product.description,
-    openGraph: {
-      title: product.name,
-      description: product.description,
-      images: [product.image],
-    },
-  }
-}
-

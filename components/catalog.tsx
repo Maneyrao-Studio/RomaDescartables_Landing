@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { PRODUCTS, Product } from "@/lib/products"
+import { Product } from "@/lib/products"
 import ProductCard from "@/components/ui/product-card"
+import { useProducts } from "@/lib/hooks/useProducts"
+import { useCategories } from "@/lib/hooks/useCategories"
 
 interface CatalogProps {
   categoriaFilter?: string
@@ -22,13 +24,14 @@ export default function Catalog({ categoriaFilter }: CatalogProps) {
     }
   }, [categoriaFilter])
 
-  const categories = ["All", ...new Set(PRODUCTS.map((p) => p.category))]
+  // Fetch categories and products using React Query
+  const { data: categories = [], isLoading: categoriesLoading } = useCategories()
+  const { data: products = [], isLoading: productsLoading, error: productsError } = useProducts({ 
+    category: categoriaFilter || selectedCategory 
+  })
 
   // Use categoriaFilter directly if present, otherwise use selectedCategory
   const currentCategory = categoriaFilter || selectedCategory
-
-  const filteredProducts =
-    currentCategory === "All" ? PRODUCTS : PRODUCTS.filter((p) => p.category === currentCategory)
 
   return (
     <div className="bg-background min-h-screen">
@@ -41,7 +44,7 @@ export default function Catalog({ categoriaFilter }: CatalogProps) {
 
         {/* Filters */}
         <div className="mb-12 flex flex-wrap gap-3">
-          {categories.map((cat) => {
+          {!categoriesLoading && categories.map((cat) => {
             const isActive = currentCategory === cat
             return (
               <button
@@ -69,16 +72,38 @@ export default function Catalog({ categoriaFilter }: CatalogProps) {
           })}
         </div>
 
+        {/* Loading State */}
+        {(categoriesLoading || productsLoading) && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="animate-pulse">
+                <div className="bg-gray-200 rounded-lg h-64 mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Error State */}
+        {productsError && (
+          <div className="text-center py-8">
+            <p className="text-red-500">Error loading products. Please try again later.</p>
+          </div>
+        )}
+
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onClick={() => router.push(`/producto/${product.id}`)}
-            />
-          ))}
-        </div>
+        {!categoriesLoading && !productsLoading && !productsError && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onClick={() => router.push(`/producto/${product.id}`)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
