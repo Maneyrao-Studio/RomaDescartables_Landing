@@ -49,7 +49,7 @@ export default function Footer() {
                 href="https://www.instagram.com/romadescartables"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 via-red-500 to-[#EED30B] text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
               >
                 <Instagram className="w-5 h-5" />
                 Instagram
