@@ -23,6 +23,7 @@ export interface LegacyProduct {
   price: number
   image: string
   category: string
+  is_featured: boolean
   specs?: string[]
   packs?: Pack[]
 }
@@ -43,6 +44,7 @@ export function adaptProductToLegacy(product: Product, media: any[] = []): Legac
     price: product.price,
     image: media.find(m => m.is_primary)?.url || '',
     category: 'Sin categoría',
+    is_featured: product.is_featured,
     specs: [],
     packs: []
   }

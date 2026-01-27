@@ -2,7 +2,6 @@
 
 import { useQuery } from "@tanstack/react-query"
 import { productService } from "../services/product.service"
-import { Product } from "../types"
 
 interface UseProductsOptions {
   category?: string
@@ -53,7 +52,9 @@ export function useFeaturedProducts(count: number = 4) {
   return useQuery({
     queryKey: ["featured-products", count],
     queryFn: () => productService.getProductsForCatalog(),
-    select: (data) => data.slice(0, count),
+    select: (data) => data
+      .filter(product => product.is_featured)
+      .slice(0, count),
     staleTime: 5 * 60 * 1000,
     retry: 2,
   })

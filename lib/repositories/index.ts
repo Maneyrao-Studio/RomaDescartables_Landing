@@ -107,6 +107,7 @@ export class SupabaseProductRepository implements ProductRepository {
       price: product.price,
       image: media.find(m => m.is_primary)?.url || '',
       category: 'Sin categoría',
+      is_featured: product.is_featured,
       specs: [],
       packs: []
     }
