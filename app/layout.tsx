@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { CartProvider } from "@/context/cart-context"
+import { QueryProvider } from "@/lib/react-query"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
@@ -39,9 +40,11 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`font-sans antialiased`}>
-        <CartProvider>
-          {children}
-        </CartProvider>
+        <QueryProvider>
+          <CartProvider>
+            {children}
+          </CartProvider>
+        </QueryProvider>
         <Analytics />
         <Toaster position="top-center" richColors />
       </body>
