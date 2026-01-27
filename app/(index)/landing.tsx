@@ -1,7 +1,6 @@
 "use client"
 import Link from "next/link"
 import { Package, Truck, Award } from "lucide-react"
-import { PRODUCTS } from "@/lib/products"
 import ProductsSection from "./components/ProductsSection"
 import HeroCarousel from "@/components/ui/hero-carousel"
 
@@ -10,7 +9,6 @@ interface LandingProps {
 }
 
 export default function Landing({ onExploreClick }: LandingProps) {
-  const featuredProducts = PRODUCTS.slice(0, 4)
 
   const carouselImages = [
     {
@@ -32,7 +30,6 @@ export default function Landing({ onExploreClick }: LandingProps) {
       <ProductsSection
         title="Novedades"
         description="Descubre lo último en productos innovadores y exclusivos."
-        products={featuredProducts}
         className="bg-section-contrast text-section-contrast-foreground"
         onExploreClick={onExploreClick}
       />
@@ -119,14 +116,12 @@ export default function Landing({ onExploreClick }: LandingProps) {
       <ProductsSection 
         title="Productos Destacados"
         description="Descubre nuestros productos más populares y de mayor demanda"
-        products={featuredProducts}
         onExploreClick={onExploreClick}
       />
       <ProductsSection 
         title="Ofertas Populares"
         description="Aprovecha los productos más elegidos a precios imparables."
         className="bg-secondary text-secondary-foreground"
-        products={featuredProducts}
         onExploreClick={onExploreClick}
       />
 
