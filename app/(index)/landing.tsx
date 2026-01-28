@@ -44,6 +44,7 @@ export default function Landing({ onExploreClick }: LandingProps) {
         title="Productos Destacados"
         description="Descubre nuestros productos más populares y de mayor demanda"
         onExploreClick={onExploreClick}
+        productType="featured"
       />
 
       <section className="bg-secondary text-secondary-foreground py-16">
@@ -126,6 +127,7 @@ export default function Landing({ onExploreClick }: LandingProps) {
         title="Descubre nuestros productos"
         description="Todo lo que necesitas al mejor precio en un solo lugar."
         onExploreClick={onExploreClick}
+        productType="regular"
       />
 
       {/* Location Section */}

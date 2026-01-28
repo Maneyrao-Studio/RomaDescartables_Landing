@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button"
 import ProductCard from "@/components/ui/product-card"
-import { useFeaturedProducts } from "@/lib/hooks/useProducts"
+import { useProducts } from "@/lib/hooks/useProducts"
 import { useRouter } from "next/navigation"
-
+import { useMemo } from "react"
 
 interface ProductsSection {
     title: string
@@ -12,12 +12,38 @@ interface ProductsSection {
     onExploreClick: () => void
     className?: string
     featuredCount?: number
+    productType?: 'featured' | 'regular'
 }
 
 function ProductsSection(productSectionProps: ProductsSection) {
-    const { onExploreClick, title, className = "", description = '', featuredCount = 4 } = productSectionProps
+    const { onExploreClick, title, className = "", description = '', featuredCount = 4, productType = 'featured' } = productSectionProps
     const router = useRouter()
-    const { data: products, isLoading, error } = useFeaturedProducts(featuredCount)
+    
+    const { data: allProducts, isLoading, error } = useProducts()
+
+    const shuffleArray = <T,>(array: T[]): T[] => {
+        const shuffled = [...array]
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+        }
+        return shuffled
+    }
+
+    const processedProducts = useMemo(() => {
+        if (!allProducts) return []
+
+        let filteredProducts = allProducts.filter(product => 
+            productType === 'regular' ? !product.is_featured : product.is_featured
+        )
+        if (filteredProducts.length === 0) {
+            filteredProducts = allProducts
+        }
+        filteredProducts = shuffleArray(filteredProducts)
+        return filteredProducts.slice(0, featuredCount)
+    }, [allProducts, productType, featuredCount])
+
+    const products = processedProducts
 
     if (isLoading) {
         return (
