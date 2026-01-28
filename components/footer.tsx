@@ -5,11 +5,11 @@ export default function Footer() {
   return (
     <footer className="bg-primary text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid items-start grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}
-          <div>
-            <Logo />
-            <p className="mt-4 text-white/80">Distribuidora de papelería y descartables con venta por mayor y menor.</p>
+          <div className="flex items-center gap-4">
+            <Logo isText={false} />
+            <p className="text-white/80">Distribuidora de papelería y descartables con venta por mayor y menor.</p>
           </div>
 
           {/* Location */}
@@ -36,27 +36,31 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4">Contacto</h4>
             <div className="flex flex-col gap-3 mb-4">
-              <a
-                href="https://wa.me/5491132813830"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-accent text-primary px-4 py-2 rounded-lg font-semibold hover:bg-accent/90 transition-colors"
-              >
-                <Phone className="w-5 h-5" />
-                WhatsApp
-              </a>
-              <a
-                href="https://www.instagram.com/romadescartables"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 via-red-500 to-[#EED30B] text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
-              >
-                <Instagram className="w-5 h-5" />
-                Instagram
-              </a>
+              <div className="w-full flex flex-col gap-2">
+                <p className="text-white/80 text-sm">Hace tu pedido directo por WhatsApp</p>
+                <a
+                  href="https://wa.me/5491132813830"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#25d366] text-primary px-4 py-2 rounded-lg font-semibold hover:bg-emerald-500 transition-colors"
+                >
+                  <Phone className="w-5 h-5" />
+                  WhatsApp
+                </a>
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <p className="text-white/80 text-sm">Síguenos en Instagram para novedades</p>
+                <a
+                  href="https://www.instagram.com/romadescartables"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-pink-500 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                >
+                  <Instagram className="w-5 h-5" />
+                  Instagram
+                </a>
+              </div>
             </div>
-            <p className="text-white/80 text-sm">Hace tu pedido directo por WhatsApp</p>
-            <p className="text-white/80 text-sm">Síguenos en Instagram para novedades</p>
           </div>
         </div>
 
