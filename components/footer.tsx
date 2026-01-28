@@ -63,21 +63,15 @@ export default function Footer() {
             </div>
           </div>
         </div>
-
-        {/* Divider */}
-        <div className="pt-2 pb-4 text-center text-white/60">
-          <p>&copy; 2026 Distribuidora Roma Descartables. Todos los derechos reservados.</p>
-        </div>
-
         {/* Developer Attribution */}
-        <div className="border-t border-white/20 py-16 text-center">
+        <div className="border-t border-white/20 py-8 text-center">
           <a
             href="https://maneyrao.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white/80 hover:text-white/60 text-base transition-colors"
           >
-            Desarrollado por Maneyrao Studio
+            Desarrollado por Maneyrao Studio (2026)
           </a>
         </div>
       </div>
