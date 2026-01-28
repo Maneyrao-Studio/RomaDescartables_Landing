@@ -16,25 +16,25 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/RomaDescartable_LOGO.jpg",
+        url: "/RomaDescartable_LOGO.png",
         sizes: "32x32",
         type: "image/jpeg",
       },
       {
-        url: "/RomaDescartable_LOGO.jpg",
+        url: "/RomaDescartable_LOGO.png",
         sizes: "192x192",
         type: "image/jpeg",
       },
       {
-        url: "/RomaDescartable_LOGO.jpg",
+        url: "/RomaDescartable_LOGO.png",
         sizes: "512x512",
         type: "image/jpeg",
       },
     ],
-    shortcut: "/RomaDescartable_LOGO.jpg",
+    shortcut: "/RomaDescartable_LOGO.png",
     apple: [
       {
-        url: "/RomaDescartable_LOGO.jpg",
+        url: "/RomaDescartable_LOGO.png",
         sizes: "180x180",
         type: "image/jpeg",
       },
