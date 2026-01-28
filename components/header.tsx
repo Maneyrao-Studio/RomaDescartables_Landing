@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { ShoppingCart, Menu as MenuIcon } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
@@ -22,7 +22,13 @@ export default function Header({ showNavigation = false }: HeaderProps) {
           <Logo />
 
           <div className="flex items-center gap-4">
-            <Link href="/carrito" className="relative p-2 hover:bg-muted rounded-lg transition-colors">
+            <Link 
+              href="/carrito" 
+              className={`relative p-2 hover:bg-muted rounded-lg transition-colors`}
+              style={itemCount > 0 ? {
+                animation: 'shake 2s ease-in-out infinite'
+              } : {}}
+            >
               <ShoppingCart className="w-6 h-6" />
               {itemCount > 0 && (
                 <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-accent rounded-full">

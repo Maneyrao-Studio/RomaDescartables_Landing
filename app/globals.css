@@ -150,3 +150,15 @@
   display: flex;
   width: max-content;
 }
+
+@keyframes shake {
+  0%, 25%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  10%, 20%, 24% {
+    transform: translateX(-1px) rotate(-0.5deg);
+  }
+  15%, 27%, 30% {
+    transform: translateX(1px) rotate(0.5deg);
+  }
+}
