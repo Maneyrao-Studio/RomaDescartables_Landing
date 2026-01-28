@@ -10,17 +10,17 @@ interface HeroCarouselProps {
     alt: string
     title?: string
     description?: string
+    isVideo?: boolean
   }>
 }
 
 export default function HeroCarousel({ images }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  // Auto-play functionality
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-    }, 5000) // Change slide every 5 seconds
+    }, 5000) 
 
     return () => clearInterval(interval)
   }, [images.length])
@@ -50,20 +50,31 @@ export default function HeroCarousel({ images }: HeroCarouselProps) {
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
           >
-            <img
-              src={image.src}
-              alt={image.alt}
-              className="w-full h-full object-cover"
-            />
+            {image.isVideo ? (
+              <video
+                src={image.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-full object-cover"
+              />
+            )}
             {/* Overlay content */}
             {(image.title || image.description) && (
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                <div className="text-center text-white p-6">
+                <div className="text-center text-white px-6">
                   {image.title && (
-                    <h3 className="text-2xl font-bold mb-2">{image.title}</h3>
+                    <h3 className="text-5xl md:text-6xl font-bold mb-2">{image.title}</h3>
                   )}
                   {image.description && (
-                    <p className="text-lg opacity-90">{image.description}</p>
+                    <p className="text-lg md:text-xl opacity-90">{image.description}</p>
                   )}
                 </div>
               </div>

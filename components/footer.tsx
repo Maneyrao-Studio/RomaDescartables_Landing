@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <Logo className="bg-muted" />
+            <Logo />
             <p className="mt-4 text-white/80">Distribuidora de papelería y descartables con venta por mayor y menor.</p>
           </div>
 

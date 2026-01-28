@@ -12,12 +12,25 @@ export default function Landing({ onExploreClick }: LandingProps) {
 
   const carouselImages = [
     {
-      src: "/carrusel-1.webp",
-      alt: "",
+      src: "/slide_video1.webm",
+      alt: "Todo lo que necesitas al mejor precio en un solo lugar.",
+      description: "Todo lo que necesitas al mejor precio en un solo lugar.",
+      title: "Roma Descartables",
+      isVideo: true,
     },
     {
-      src: "/carrusel-2.webp",
-      alt: "",
+      src: "/slide_video2.webm",
+      title: "Roma Descartables",
+      description: "Todo lo que necesitas al mejor precio en un solo lugar.",
+      alt: "Todo lo que necesitas al mejor precio en un solo lugar.",
+      isVideo: true,
+    },
+    {
+      src: "/slide_video3.webm",
+      title: "Roma Descartables",
+      description: "Todo lo que necesitas al mejor precio en un solo lugar.",
+      alt: "Todo lo que necesitas al mejor precio en un solo lugar.",
+      isVideo: true,
     },
   ]
 
@@ -27,10 +40,9 @@ export default function Landing({ onExploreClick }: LandingProps) {
         <HeroCarousel images={carouselImages} />
       </div>
       
-      <ProductsSection
-        title="Novedades"
-        description="Descubre lo último en productos innovadores y exclusivos."
-        className="bg-section-contrast text-section-contrast-foreground"
+      <ProductsSection 
+        title="Productos Destacados"
+        description="Descubre nuestros productos más populares y de mayor demanda"
         onExploreClick={onExploreClick}
       />
 
@@ -54,7 +66,6 @@ export default function Landing({ onExploreClick }: LandingProps) {
                   />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Bandejas y envases desechables</h3>
-                <p className="text-black/80">Bandejas de aluminio, bandejas de cartón, bandejas plástica, platos y discos dorados, entre otros.</p>
               </div>
             </Link>
 
@@ -68,7 +79,6 @@ export default function Landing({ onExploreClick }: LandingProps) {
                   />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Bolsas y empaques</h3>
-                <p className="text-black/80">Bolsas de polipropileno, bolsas de tela, bolsas kraft, bolsas de papel, bolsas riñón y rollos de arranque.</p>
               </div>
             </Link>
 
@@ -82,7 +92,6 @@ export default function Landing({ onExploreClick }: LandingProps) {
                   />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Artículos de librería y papelería</h3>
-                <p className="text-black/80">Cuadernos, carpetas, calculadoras, marcadores, cintas adhesivas y otros materiales de oficina.</p>
               </div>
             </Link>
 
@@ -114,17 +123,10 @@ export default function Landing({ onExploreClick }: LandingProps) {
       </section>
 
       <ProductsSection 
-        title="Productos Destacados"
-        description="Descubre nuestros productos más populares y de mayor demanda"
+        title="Descubre nuestros productos"
+        description="Todo lo que necesitas al mejor precio en un solo lugar."
         onExploreClick={onExploreClick}
       />
-      <ProductsSection 
-        title="Ofertas Populares"
-        description="Aprovecha los productos más elegidos a precios imparables."
-        className="bg-secondary text-secondary-foreground"
-        onExploreClick={onExploreClick}
-      />
-
 
       {/* Location Section */}
       <section className="bg-muted py-16">
