@@ -3,12 +3,19 @@ import Link from "next/link"
 import { Package, Truck, Award } from "lucide-react"
 import ProductsSection from "./components/ProductsSection"
 import HeroCarousel from "@/components/ui/hero-carousel"
+import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 interface LandingProps {
   onExploreClick: () => void
 }
 
 export default function Landing({ onExploreClick }: LandingProps) {
+  const featuredProductsAnimation = useScrollAnimation()
+  const categoriesSectionAnimation = useScrollAnimation()
+  const categoriesGridAnimation = useScrollAnimation()
+  const featuresAnimation = useScrollAnimation()
+  const regularProductsAnimation = useScrollAnimation()
+  const locationAnimation = useScrollAnimation()
 
   const carouselImages = [
     {
@@ -40,14 +47,16 @@ export default function Landing({ onExploreClick }: LandingProps) {
         <HeroCarousel images={carouselImages} />
       </div>
       
-      <ProductsSection 
-        title="Productos Destacados"
-        description="Descubre nuestros productos más populares y de mayor demanda"
-        onExploreClick={onExploreClick}
-        productType="featured"
-      />
+      <div ref={featuredProductsAnimation.ref} className={featuredProductsAnimation.animationClass}>
+        <ProductsSection 
+          title="Productos Destacados"
+          description="Descubre nuestros productos más populares y de mayor demanda"
+          onExploreClick={onExploreClick}
+          productType="featured"
+        />
+      </div>
 
-      <section className="bg-secondary text-secondary-foreground py-16">
+      <section ref={categoriesSectionAnimation.ref} className={`${categoriesSectionAnimation.animationClass} bg-secondary text-secondary-foreground py-16`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
          <header className="text-center mb-12">
             <h2 className="text-3xl font-extrabold pb-2">
@@ -55,10 +64,10 @@ export default function Landing({ onExploreClick }: LandingProps) {
             </h2>
             <p className="text-black/80">Encuentra todo lo que necesitas en un solo lugar</p>
          </header>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div ref={categoriesGridAnimation.ref} className={`${categoriesGridAnimation.animationClass} grid md:grid-cols-3 gap-8`}>
 
             <Link href="/catalogo?categoria=Bandejas%20de%20Cartón">
-              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow px-4 py-6 flex flex-col items-center text-center group">
+              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow px-4 py-6 flex flex-col items-center text-center group animate-fade-up" style={{animationDelay: "100ms"}}>
                 <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden">
                   <img
                     src="/tela-bolsa-45x40.jpg"
@@ -71,7 +80,7 @@ export default function Landing({ onExploreClick }: LandingProps) {
             </Link>
 
             <Link href="/catalogo?categoria=Bolsas%20de%20Tela">
-              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow px-4 py-6 flex flex-col items-center text-center group">
+              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow px-4 py-6 flex flex-col items-center text-center group animate-fade-up" style={{animationDelay: "200ms"}}>
                 <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden">
                   <img
                     src="/tela-bolsa-45x40.jpg"
@@ -84,7 +93,7 @@ export default function Landing({ onExploreClick }: LandingProps) {
             </Link>
 
             <Link href="/catalogo">
-              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow px-4 py-6 flex flex-col items-center text-center group">
+              <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow px-4 py-6 flex flex-col items-center text-center group animate-fade-up" style={{animationDelay: "300ms"}}>
                 <div className="mb-6 h-40 w-full rounded-lg aspect-square bg-muted overflow-hidden ">
                   <img
                     src="/tela-bolsa-45x40.jpg"
@@ -101,7 +110,7 @@ export default function Landing({ onExploreClick }: LandingProps) {
       </section>
 
       {/* Features Section */}
-      <section className="bg-primary text-white py-16">
+      <section ref={featuresAnimation.ref} className={`${featuresAnimation.animationClass} bg-primary text-white py-16`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center text-center">
@@ -123,18 +132,20 @@ export default function Landing({ onExploreClick }: LandingProps) {
         </div>
       </section>
 
-      <ProductsSection 
-        title="Descubre nuestros productos"
-        description="Todo lo que necesitas al mejor precio en un solo lugar."
-        onExploreClick={onExploreClick}
-        productType="regular"
-      />
+      <div ref={regularProductsAnimation.ref} className={regularProductsAnimation.animationClass}>
+        <ProductsSection 
+          title="Descubre nuestros productos"
+          description="Todo lo que necesitas al mejor precio en un solo lugar."
+          onExploreClick={onExploreClick}
+          productType="regular"
+        />
+      </div>
 
       {/* Location Section */}
       <section className="bg-muted py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Nuestra Ubicación</h2>
-          <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 animate-fade-up">Nuestra Ubicación</h2>
+          <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto animate-fade-up">
             Visítanos en San Justo, La Matanza. Papelera Roma Descartables 
           </p>
           
