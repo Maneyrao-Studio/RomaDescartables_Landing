@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -16,6 +16,15 @@ interface HeroCarouselProps {
 
 export default function HeroCarousel({ images }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [loadedVideos, setLoadedVideos] = useState<Set<number>>(new Set())
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+
+  useEffect(() => {
+    const currentSlide = images[currentIndex]
+    if (currentSlide?.isVideo && !loadedVideos.has(currentIndex)) {
+      setLoadedVideos(prev => new Set(prev).add(currentIndex))
+    }
+  }, [currentIndex, images, loadedVideos])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,6 +33,21 @@ export default function HeroCarousel({ images }: HeroCarouselProps) {
 
     return () => clearInterval(interval)
   }, [images.length])
+
+  // Pause inactive videos and play active video
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        if (index === currentIndex) {
+          video.play().catch(() => {
+            // Ignore autoplay errors
+          })
+        } else {
+          video.pause()
+        }
+      }
+    })
+  }, [currentIndex])
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) =>
