@@ -29,7 +29,7 @@ function calculatePackPrice(packs: Pack[] | undefined, quantity: number, regular
 
 export default function CartView() {
   const router = useRouter()
-  const { items, removeItem, updateQuantity, getTotal, clearCart } = useCart()
+  const { items, removeItem, updateQuantity, getTotal, clearCart, shippingType, setShippingType, getShippingDiscount, getTotalWithDiscount } = useCart()
 
   const handleCheckout = () => {
     if (items.length === 0) return
@@ -38,7 +38,8 @@ export default function CartView() {
       .map((item) => `- ${item.name} (x${item.quantity}) - ${formatPrice(calculatePackPrice(item.packs, item.quantity, item.price))}`)
       .join("%0A")
 
-    const message = `Hola Roma Descartables! Quiero hacer el siguiente pedido:%0A%0A${itemsList}%0A%0ATotal: ${formatPrice(getTotal())}`
+    const shippingText = shippingType === 'with' ? 'Con envío' : 'Retiro en sucursal'
+    const message = `Hola Roma Descartables! Quiero hacer el siguiente pedido:%0A%0A${itemsList}%0A%0ATipo de envío: ${shippingText}%0A%0ATotal: ${formatPrice(getTotalWithDiscount())}`
 
     window.open(`https://wa.me/5491132813830?text=${encodeURIComponent(message)}`, "_blank")
   }
@@ -123,6 +124,33 @@ export default function CartView() {
               <div className="bg-white rounded-lg p-6 border border-border sticky top-32">
                 <h2 className="text-xl font-bold text-primary mb-6">Resumen del Pedido</h2>
 
+                {/* Shipping Type Toggle */}
+                <div className="mb-6">
+                  <label className="text-sm font-medium text-foreground/80 mb-3 block">Tipo de envío:</label>
+                  <div className="flex bg-muted rounded-lg p-1">
+                    <button
+                      onClick={() => setShippingType('with')}
+                      className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+                        shippingType === 'with'
+                          ? 'bg-primary text-primary-foreground shadow-sm'
+                          : 'text-foreground/60 hover:text-foreground'
+                      }`}
+                    >
+                      Con envío
+                    </button>
+                    <button
+                      onClick={() => setShippingType('without')}
+                      className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+                        shippingType === 'without'
+                          ? 'bg-primary text-primary-foreground shadow-sm'
+                          : 'text-foreground/60 hover:text-foreground'
+                      }`}
+                    >
+                      Sin envío (retiro)
+                    </button>
+                  </div>
+                </div>
+
                 <div className="space-y-4 mb-6 pb-6 border-b border-border">
                   <div className="flex justify-between text-foreground/60">
                     <span>Subtotal:</span>
@@ -130,13 +158,19 @@ export default function CartView() {
                   </div>
                   <div className="flex justify-between text-foreground/60">
                     <span>Envío:</span>
-                    <span>Consultar</span>
+                    <span>{shippingType === 'with' ? 'A domicilio' : 'Retiro en sucursal'}</span>
                   </div>
+                  {getShippingDiscount() > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span>Descuento (10% retiro):</span>
+                      <span>-{formatPrice(getShippingDiscount())}</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex justify-between text-2xl font-bold text-primary mb-6">
                   <span>Total:</span>
-                  <span>{formatPrice(getTotal())}</span>
+                  <span>{formatPrice(getTotalWithDiscount())}</span>
                 </div>
 
                 <Button onClick={handleCheckout} className="w-full mb-3">

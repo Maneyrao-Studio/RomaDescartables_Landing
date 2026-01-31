@@ -24,6 +24,10 @@ interface CartContextType {
   clearCart: () => void
   getTotal: () => number
   getItemCount: () => number
+  shippingType: 'with' | 'without'
+  setShippingType: (type: 'with' | 'without') => void
+  getShippingDiscount: () => number
+  getTotalWithDiscount: () => number
 }
 
 export const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -34,6 +38,7 @@ interface CartProviderProps {
 
 export function CartProvider({ children }: CartProviderProps) {
   const [items, setItems] = useState<CartItem[]>([])
+  const [shippingType, setShippingType] = useState<'with' | 'without'>('with')
 
   useEffect(() => {
     const stored = localStorage.getItem('cart')
@@ -100,6 +105,15 @@ export function CartProvider({ children }: CartProviderProps) {
     return items.reduce((total, item) => total + calculatePackPrice(item.packs, item.quantity, item.price), 0)
   }, [items])
 
+  const getShippingDiscount = useCallback(() => {
+    const subtotal = getTotal()
+    return shippingType === 'without' ? subtotal * 0.10 : 0
+  }, [getTotal, shippingType])
+
+  const getTotalWithDiscount = useCallback(() => {
+    return getTotal() - getShippingDiscount()
+  }, [getTotal, getShippingDiscount])
+
   const getItemCount = useCallback(() => {
     return items.reduce((count, item) => count + item.quantity, 0)
   }, [items])
@@ -112,6 +126,10 @@ export function CartProvider({ children }: CartProviderProps) {
     clearCart,
     getTotal,
     getItemCount,
+    shippingType,
+    setShippingType,
+    getShippingDiscount,
+    getTotalWithDiscount,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
