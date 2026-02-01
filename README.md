@@ -7,12 +7,16 @@ A Next.js application for an online stationery and disposables store (Distribuid
 First, install dependencies:
 
 ```bash
+npm install
+# or
 pnpm install
 ```
 
 Then, run the development server:
 
 ```bash
+npm run dev
+# or
 pnpm dev
 ```
 
@@ -23,6 +27,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 To build for production:
 
 ```bash
+npm run build
+npm run start
+# or
 pnpm build
 pnpm start
 ```
@@ -30,6 +37,8 @@ pnpm start
 ## Lint
 
 ```bash
+npm run lint
+# or
 pnpm lint
 ```
 
@@ -39,36 +48,47 @@ Deployed on Vercel.
 
 ### 🚨 Guías Importantes de Despliegue
 
-**Consistencia del Gestor de Paquetes**
+**Gestores de Paquetes Soportados**
 
-Este proyecto utiliza **pnpm** como gestor de paquetes. Para evitar fallos en el despliegue:
+Este proyecto soporta tanto **npm** como **pnpm** para desarrollo local. Para evitar fallos en el despliegue:
 
-1. **Usa siempre pnpm para gestionar dependencias**
-   ```bash
-   pnpm install <nombre-del-paquete>
-   ```
+**Para Desarrollo Local:**
+```bash
+# Puedes usar tu gestor preferido:
+npm install <nombre-del-paquete>
+# o
+pnpm install <nombre-del-paquete>
+```
 
-2. **Nunca mezcles gestores de paquetes** - No uses `npm install` o `yarn add`
-   - Esto crea lockfiles conflictivos (`package-lock.json`, `yarn.lock`)
-   - Vercel detecta `pnpm-lock.yaml` y usa pnpm automáticamente
-   - Los lockfiles mixtos causan errores de "frozen-lockfile" en CI
+**Para Despliegue en Vercel:**
+- **Configurado para usar npm** mediante `vercel.json`
+- Vercel usará `npm install` y `npm run build`
+- Esto evita conflictos con `pnpm-lock.yaml`
 
-3. **Mantén pnpm-lock.yaml actualizado**
-   - Después de agregar dependencias, el lockfile se actualiza automáticamente
-   - Siempre haz commit del `pnpm-lock.yaml` actualizado a git
-   - Nunca edites el lockfile manualmente
+**Manejo de Lockfiles:**
+1. **package-lock.json** - Usado por Vercel (npm)
+2. **pnpm-lock.yaml** - Opcional para desarrollo local
 
-4. **Solución de problemas de despliegue**
-   ```bash
-   # Si el despliegue falla por problemas de lockfile:
-   rm package-lock.json yarn.lock  # Eliminar lockfiles conflictivos
-   pnpm install                    # Regenerar pnpm-lock.yaml
-   git add pnpm-lock.yaml         # Hacer commit del lockfile actualizado
-   ```
+**Manteniendo Ambos Lockfiles Sincronizados:**
+```bash
+# Después de agregar dependencias con npm:
+npm install                    # Actualiza package-lock.json
+npx pnpm install               # Sincroniza pnpm-lock.yaml
+git add package-lock.json pnpm-lock.yaml
+```
 
-**¿Por qué esto es importante:**
-- Vercel CI ejecuta con `--frozen-lockfile` por defecto
-- Esto asegura builds reproducibles entre entornos
-- Los lockfiles desactualizados causan fallos en producción
+**Solución de Problemas de Despliegue:**
+```bash
+# Si el despliegue falla por problemas de lockfile:
+rm -rf node_modules
+npm install                    # Regenerar package-lock.json principal
+npx pnpm install               # Sincronizar si usas pnpm localmente
+git add package-lock.json pnpm-lock.yaml
+```
 
-Para más información, consulta la [documentación de gestores de paquetes de Vercel](https://vercel.com/docs/concepts/projects/overview#package-manager).
+**¿Por qué esta configuración?**
+- **Flexibilidad local** - Usa tu gestor preferido
+- **Consistencia en producción** - Vercel usa npm configurado explícitamente
+- **Sin conflictos** - vercel.json define el gestor para CI/CD
+
+Para más información, consulta la [documentación de configuración de Vercel](https://vercel.com/docs/concepts/projects/configuration).
