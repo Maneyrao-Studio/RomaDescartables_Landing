@@ -161,6 +161,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.1.9)
+      tailwindcss-animated:
+        specifier: ^2.0.0
+        version: 2.0.0(tailwindcss@4.1.9)
       vaul:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -1756,6 +1759,11 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
+  tailwindcss-animated@2.0.0:
+    resolution: {integrity: sha512-anNNGpxNgjydD8p1lcJjxxH+XbjW6KR8Xs29owTrbcf3tOJ6IRblpyFob43HBkfxFJJTAfFQqugoEG2b1EsR0A==}
+    peerDependencies:
+      tailwindcss: '>=3.1.0 || >=4.0.0'
+
   tailwindcss@4.1.9:
     resolution: {integrity: sha512-anBZRcvfNMsQdHB9XSGzAtIQWlhs49uK75jfkwrqjRUbjt4d7q9RE1wR1xWyfYZhLFnFX4ahWp88Au2lcEw5IQ==}
 
@@ -3305,6 +3313,10 @@ snapshots:
   tailwind-merge@3.3.1: {}
 
   tailwindcss-animate@1.0.7(tailwindcss@4.1.9):
+    dependencies:
+      tailwindcss: 4.1.9
+
+  tailwindcss-animated@2.0.0(tailwindcss@4.1.9):
     dependencies:
       tailwindcss: 4.1.9
 
