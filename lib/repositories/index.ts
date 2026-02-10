@@ -21,7 +21,10 @@ export class SupabaseProductRepository implements ProductRepository {
     try {
       const { data, error } = await this.supabase
         .from('products')
-        .select('*')
+        .select(`
+          *,
+          product_media(id, url, is_primary, type, order)
+        `)
         .eq('id', id)
         .single()
 
@@ -35,7 +38,12 @@ export class SupabaseProductRepository implements ProductRepository {
 
   async findAll(options: any = {}): Promise<Product[]> {
     try {
-      let query = this.supabase.from('products').select('*')
+      let query = this.supabase
+        .from('products')
+        .select(`
+          *,
+          product_media(id, url, is_primary, type, order)
+        `)
 
       if (options.filters?.status) {
         query = query.eq('status', options.filters.status)
@@ -70,7 +78,10 @@ export class SupabaseProductRepository implements ProductRepository {
     try {
       const { data, error } = await this.supabase
         .from('products')
-        .select('*')
+        .select(`
+          *,
+          product_media(id, url, is_primary, type, order)
+        `)
         .or(`name.ilike.%${query}%,description.ilike.%${query}%`)
         .eq('status', ProductStatus.ACTIVE)
 
@@ -83,18 +94,45 @@ export class SupabaseProductRepository implements ProductRepository {
   }
 
   async getLegacyProducts(): Promise<LegacyProduct[]> {
-    const products = await this.findByStatus(ProductStatus.ACTIVE)
-    
-    return products.map(product => 
-      this.adaptProductToLegacy(product, [])
-    )
+    try {
+      const { data, error } = await this.supabase
+        .from('products')
+        .select(`
+          *,
+          product_media(id, url, is_primary, type, order)
+        `)
+        .eq('status', ProductStatus.ACTIVE)
+
+      if (error) throw error
+      
+      return data?.map(product => 
+        this.adaptProductToLegacy(product, product.product_media || [])
+      ) || []
+    } catch (error) {
+      console.error('Error fetching legacy products:', error)
+      return []
+    }
   }
 
   async getLegacyProduct(id: string): Promise<LegacyProduct | null> {
-    const product = await this.findById(id)
-    if (!product) return null
+    try {
+      const { data, error } = await this.supabase
+        .from('products')
+        .select(`
+          *,
+          product_media(id, url, is_primary, type, order)
+        `)
+        .eq('id', id)
+        .single()
 
-    return this.adaptProductToLegacy(product, [])
+      if (error) throw error
+      if (!data) return null
+
+      return this.adaptProductToLegacy(data, data.product_media || [])
+    } catch (error) {
+      console.error('Error fetching legacy product:', error)
+      return null
+    }
   }
 
   
