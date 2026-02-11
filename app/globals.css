@@ -146,7 +146,7 @@
 }
 
 .animate-scroll-text {
-  animation: scroll-text 15s linear infinite;
+  animation: scroll-text 20s linear infinite;
   display: flex;
   width: max-content;
 }
@@ -156,9 +156,76 @@
     transform: translateX(0) rotate(0deg);
   }
   10%, 20%, 24% {
-    transform: translateX(-1px) rotate(-0.5deg);
+    transform: translateX(-2px) rotate(-1deg);
   }
   15%, 27%, 30% {
-    transform: translateX(1px) rotate(0.5deg);
+    transform: translateX(2px) rotate(1deg);
   }
+}
+
+/* Variables para easing personalizado */
+:root {
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* View Transitions API Styles - Mejorados */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+::view-transition-new(root) {
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: var(--ease-smooth);
+}
+
+::view-transition-old(root) {
+  animation-name: fade-out-smooth;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-in-smooth;
+}
+
+@keyframes fade-out-smooth {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes fade-in-smooth {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Skip transitions for specific routes */
+.no-transition ::view-transition-old(root),
+.no-transition ::view-transition-new(root) {
+  animation: none;
 }
