@@ -1,8 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import ProductCard from "@/components/ui/product-card"
-import { useProducts } from "@/lib/hooks/useProducts"
+import ProductCard from "@/components/ui/product-card-enhanced"
+import { useProductsWithImages } from "@/lib/hooks/useProductsWithImages"
 import { useRouter } from "next/navigation"
 import { useMemo } from "react"
 
@@ -19,7 +19,7 @@ function ProductsSection(productSectionProps: ProductsSection) {
     const { onExploreClick, title, className = "", description = '', featuredCount = 4, productType = 'featured' } = productSectionProps
     const router = useRouter()
     
-    const { data: allProducts, isLoading, error } = useProducts()
+    const { products: allProducts, isLoading, error } = useProductsWithImages()
 
     const shuffleArray = <T,>(array: T[]): T[] => {
         const shuffled = [...array]

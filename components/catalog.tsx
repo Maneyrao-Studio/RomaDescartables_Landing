@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Product } from "@/lib/products"
-import ProductCard from "@/components/ui/product-card"
-import { useProducts } from "@/lib/hooks/useProducts"
+import ProductCard from "@/components/ui/product-card-enhanced"
+import { useProductsWithImages } from "@/lib/hooks/useProductsWithImages"
 import { useCategories } from "@/lib/hooks/useCategories"
+import { Link as TransitionLink } from "next-view-transitions"
 
 interface CatalogProps {
   categoriaFilter?: string
@@ -26,7 +27,7 @@ export default function Catalog({ categoriaFilter }: CatalogProps) {
 
   // Fetch categories and products using React Query
   const { data: categories = [], isLoading: categoriesLoading } = useCategories()
-  const { data: products = [], isLoading: productsLoading, error: productsError } = useProducts({ 
+  const { products, isLoading: productsLoading, error: productsError } = useProductsWithImages({ 
     category: categoriaFilter || selectedCategory 
   })
 
@@ -96,11 +97,12 @@ export default function Catalog({ categoriaFilter }: CatalogProps) {
         {!categoriesLoading && !productsLoading && !productsError && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onClick={() => router.push(`/producto/${product.id}`)}
-              />
+              <TransitionLink key={product.id} href={`/producto/${product.id}`}>
+                <ProductCard
+                  product={product}
+                  onClick={() => {}}
+                />
+              </TransitionLink>
             ))}
           </div>
         )}
