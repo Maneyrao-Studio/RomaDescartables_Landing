@@ -7,6 +7,7 @@ import { formatPrice } from "@/lib/utils"
 import BackButton from "@/components/ui/back-button"
 import { Button } from "@/components/ui/button"
 import { Pack } from "@/context/cart-context"
+import { Link as TransitionLink } from "next-view-transitions"
 
 function calculatePackPrice(packs: Pack[] | undefined, quantity: number, regularPrice: number): number {
   if (!packs || packs.length === 0) return regularPrice * quantity
@@ -55,9 +56,11 @@ export default function CartView() {
         {items.length === 0 ? (
           <div className="bg-white rounded-lg p-12 text-center border border-border">
             <p className="text-foreground/60 text-lg mb-6">Tu carrito está vacío</p>
-            <Button onClick={() => router.push('/catalogo')}>
-              Seguir comprando
-            </Button>
+            <TransitionLink href="/catalogo">
+              <Button>
+                Seguir comprando
+              </Button>
+            </TransitionLink>
           </div>
         ) : (
           <div className="grid lg:grid-cols-3 gap-8">
@@ -177,16 +180,17 @@ export default function CartView() {
                   Comprar por WhatsApp
                 </Button>
 
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    clearCart()
-                    router.push('/catalogo')
-                  }}
-                  className="w-full"
-                >
-                  Limpiar carrito
-                </Button>
+                 <TransitionLink href="/catalogo">
+                   <Button
+                     variant="outline"
+                     onClick={() => {
+                       clearCart()
+                     }}
+                     className="w-full"
+                   >
+                     Limpiar carrito
+                   </Button>
+                 </TransitionLink>
               </div>
             </div>
           </div>

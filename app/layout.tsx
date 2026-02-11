@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { CartProvider } from "@/context/cart-context"
 import { QueryProvider } from "@/lib/react-query"
 import { Toaster } from "@/components/ui/sonner"
+import { ViewTransitions } from "next-view-transitions"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -49,15 +50,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`font-sans antialiased`}>
-        <QueryProvider>
-          <CartProvider>
-            {children}
-          </CartProvider>
-        </QueryProvider>
-        <Analytics />
-        <Toaster position="top-center" richColors />
-      </body>
+      <ViewTransitions>
+        <body className={`font-sans antialiased`}>
+          <QueryProvider>
+            <CartProvider>
+              {children}
+            </CartProvider>
+          </QueryProvider>
+          <Analytics />
+          <Toaster position="top-center" richColors />
+        </body>
+      </ViewTransitions>
     </html>
   )
 }
