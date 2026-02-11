@@ -14,6 +14,15 @@ export interface Product {
   status: ProductStatus
   is_featured: boolean
   created_at: string
+  product_media?: ProductMedia[]
+}
+
+export interface ProductMedia {
+  id: string
+  url: string
+  is_primary: boolean
+  type: string
+  order: number
 }
 
 export interface LegacyProduct {
