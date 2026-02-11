@@ -5,6 +5,7 @@ import { ShoppingCart, Menu as MenuIcon } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
 import Logo from "@/components/ui/logo"
 import Menu from "@/components/ui/menu"
+import { Link as TransitionLink } from "next-view-transitions"
 
 interface HeaderProps {
   showNavigation?: boolean
@@ -22,7 +23,7 @@ export default function Header({ showNavigation = false }: HeaderProps) {
           <Logo />
 
           <div className="flex items-center gap-4">
-            <Link 
+            <TransitionLink 
               href="/carrito" 
               className={`relative p-2 hover:bg-muted rounded-lg transition-colors`}
               style={itemCount > 0 ? {
@@ -35,7 +36,7 @@ export default function Header({ showNavigation = false }: HeaderProps) {
                   {itemCount}
                 </span>
               )}
-            </Link>
+            </TransitionLink>
             <button
               onClick={() => setIsMenuOpen(true)}
               className="p-2 hover:bg-muted rounded-lg transition-colors"
