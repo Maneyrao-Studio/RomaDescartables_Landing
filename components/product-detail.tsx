@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Minus, Plus, ShoppingCart, Zap, RotateCcw, Headphones, ArrowLeft } from "lucide-react";
 import { toast } from "sonner"
@@ -14,6 +14,17 @@ interface Pack {
   price: number
 }
 
+interface Variant {
+  id: string
+  product_id: string
+  label: string
+  measure_value: string | null
+  price: number
+  stock: number
+  is_default: boolean
+  sort_order: number
+}
+
 interface Product {
   id: string
   name: string
@@ -23,6 +34,7 @@ interface Product {
   category: string
   specs?: string[]
   packs?: Pack[]
+  variants?: Variant[]
   quantity?: number
 }
 
@@ -50,7 +62,19 @@ function calculatePackPrice(packs: Pack[] | undefined, quantity: number, regular
 export default function ProductDetail({ product }: ProductDetailProps) {
   const router = useRouter()
   const [quantity, setQuantity] = useState(1)
+  const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null)
   const { addItem } = useCart()
+
+  const sortedVariants = [...(product.variants || [])].sort((a, b) => a.sort_order - b.sort_order)
+  const defaultVariant = sortedVariants.find(v => v.is_default) || sortedVariants[0]
+  const currentVariant = selectedVariant || defaultVariant
+  const currentPrice = currentVariant?.price ?? product.price
+
+  useEffect(() => {
+    if (sortedVariants.length > 0 && !selectedVariant) {
+      setSelectedVariant(defaultVariant || null)
+    }
+  }, [defaultVariant, selectedVariant, sortedVariants.length])
 
   const handleQuantityChange = (delta: number) => {
     setQuantity(Math.max(1, quantity + delta));
@@ -60,10 +84,11 @@ export default function ProductDetail({ product }: ProductDetailProps) {
      addItem({
        id: product.id,
        name: product.name,
-       price: product.price,
+       price: currentPrice,
        quantity: quantity,
        image: product.image,
        packs: product.packs,
+       variant: currentVariant || undefined,
      })
      toast.success('Producto agregado al carrito')
     }
@@ -99,10 +124,44 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 <span className="text-lg text-gray-500 mb-1 block">Precio</span>
                 <div className="flex items-baseline gap-3">
                   <span className="text-3xl font-bold text-black">
-                    {formatPrice(product.price)}
+                    {formatPrice(currentPrice)}
                   </span>
                 </div>
               </div>
+
+              {sortedVariants.length > 0 && (
+                <div className="mb-8 p-6 bg-secondary rounded-2xl">
+                  <span className="text-base text-gray-900 mb-3 block font-bold">Selecciona medida</span>
+                   <div className="flex flex-wrap gap-2">
+                    {sortedVariants.map((variant) => (
+                      <button
+                        key={variant.id}
+                        onClick={() => setSelectedVariant(variant)}
+                        disabled={variant.stock === 0}
+                        className={`relative px-4 py-3 rounded-2xl border-2 transition-all ${
+                          currentVariant?.id === variant.id
+                            ? "border-gray-900 bg-gray-900 shadow-lg scale-105"
+                            : "border-gray-300 bg-white hover:border-gray-400 hover:shadow-md"
+                        } ${variant.stock === 0 ? "opacity-50 cursor-not-allowed" : ""}`}
+                      >
+                        {currentVariant?.id === variant.id && (
+                          <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                        )}
+                        <div className={`text-lg font-extrabold ${currentVariant?.id === variant.id ? "text-white" : "text-gray-900"}`}>
+                          {variant.label}
+                        </div>
+                        <div className={`text-base font-medium ${currentVariant?.id === variant.id ? "text-white/90" : "text-black"}`}>
+                          {formatPrice(variant.price)}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {product.packs && product.packs.length > 0 && (
                 <div className="mb-8 p-6 bg-secondary rounded-2xl">
@@ -168,7 +227,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 <div className="flex items-center justify-between mb-6 p-4 bg-gray-300 rounded-2xl">
                   <span className="text-xl text-gray-700">Total</span>
                   <span className="text-3xl font-bold text-black">
-                    {formatPrice(calculatePackPrice(product.packs, quantity, product.price))}
+                    {formatPrice(calculatePackPrice(product.packs, quantity, currentPrice))}
                   </span>
                 </div>
 

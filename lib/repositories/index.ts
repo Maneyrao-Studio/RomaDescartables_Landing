@@ -13,6 +13,6 @@ export interface ProductRepository {
   getLegacyProduct(id: string): Promise<LegacyProduct | null>
 }
 
-import { BackendProductRepository } from './backend'
+import { SupabaseProductRepository } from './supabase'
 
-export const productRepository = new BackendProductRepository()
+export const productRepository = new SupabaseProductRepository()

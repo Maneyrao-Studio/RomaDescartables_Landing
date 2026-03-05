@@ -2,7 +2,8 @@ import {
   Product, 
   ProductStatus, 
   LegacyProduct,
-  ProductMedia
+  ProductMedia,
+  Variant
 } from '../types'
 import { ApiClient } from '../api-client'
 
@@ -103,7 +104,8 @@ export class BackendProductRepository implements ProductRepository {
         is_primary: img.is_primary,
         type: 'image',
         order: img.order
-      })) || []
+      })) || [],
+      variants: data.variants?.map((v: any) => this.mapToVariant(v)) || []
     }
   }
 
@@ -117,7 +119,21 @@ export class BackendProductRepository implements ProductRepository {
       status: ProductStatus.ACTIVE, // Backend solo devuelve activos
       is_featured: data.is_featured,
       created_at: '', // No utilizado
-      product_media: []
+      product_media: [],
+      variants: data.variants?.map((v: any) => this.mapToVariant(v)) || []
+    }
+  }
+
+  private mapToVariant(data: any): Variant {
+    return {
+      id: data.id,
+      product_id: data.product_id,
+      label: data.label,
+      measure_value: data.measure_value || null,
+      price: data.price,
+      stock: data.stock,
+      is_default: data.is_default || false,
+      sort_order: data.sort_order || 0
     }
   }
 
@@ -131,7 +147,8 @@ export class BackendProductRepository implements ProductRepository {
       category: 'Sin categoría',
       is_featured: product.is_featured,
       specs: [],
-      packs: []
+      packs: [],
+      variants: product.variants
     }
   }
 }

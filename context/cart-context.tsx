@@ -7,6 +7,17 @@ export interface Pack {
   price: number
 }
 
+export interface CartVariant {
+  id: string
+  product_id: string
+  label: string
+  measure_value: string | null
+  price: number
+  stock: number
+  is_default: boolean
+  sort_order: number
+}
+
 export interface CartItem {
   id: string
   name: string
@@ -14,6 +25,7 @@ export interface CartItem {
   quantity: number
   image: string
   packs?: Pack[]
+  variant?: CartVariant
 }
 
 interface CartContextType {

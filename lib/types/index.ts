@@ -15,6 +15,7 @@ export interface Product {
   is_featured: boolean
   created_at: string
   product_media?: ProductMedia[]
+  variants?: Variant[]
 }
 
 export interface ProductMedia {
@@ -23,6 +24,17 @@ export interface ProductMedia {
   is_primary: boolean
   type: string
   order: number
+}
+
+export interface Variant {
+  id: string
+  product_id: string
+  label: string
+  measure_value: string | null
+  price: number
+  stock: number
+  is_default: boolean
+  sort_order: number
 }
 
 export interface LegacyProduct {
@@ -35,6 +47,7 @@ export interface LegacyProduct {
   is_featured: boolean
   specs?: string[]
   packs?: Pack[]
+  variants?: Variant[]
 }
 
 export interface Pack {
