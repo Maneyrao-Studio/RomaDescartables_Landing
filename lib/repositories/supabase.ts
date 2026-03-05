@@ -7,6 +7,14 @@ import {
 } from '../types'
 import { supabase } from '../supabase-client'
 
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
+
+function getFullImageUrl(path: string): string {
+  if (!path) return ''
+  if (path.startsWith('http')) return path
+  return `${SUPABASE_URL}/storage/v1/object/public/products/${path}`
+}
+
 export interface ProductRepository {
   findById(id: string): Promise<Product | null>
   findAll(options?: any): Promise<Product[]>
@@ -14,6 +22,16 @@ export interface ProductRepository {
   search(query: string): Promise<Product[]>
   getLegacyProducts(): Promise<LegacyProduct[]>
   getLegacyProduct(id: string): Promise<LegacyProduct | null>
+}
+
+const LOCAL_IMAGE_MAP: Record<string, string> = {
+  "bolsa-tela-1": "/tela-bolsa-15x26.jpg",
+  "bolsa-tela-2": "/tela-bolsa-22x30.jpg",
+  "bolsa-tela-3": "/tela-bolsa-30x40.jpg",
+  "bolsa-tela-4": "/tela-bolsa-45x40.jpg",
+  "bandeja-carton-1": "/bandeja-carton-blanca.jpg",
+  "bandeja-carton-2": "/bandeja-carton-numero-7.jpg",
+  "bandeja-carton-3": "/bandeja-carton-numero-8.jpg",
 }
 
 export class SupabaseProductRepository implements ProductRepository {
@@ -229,12 +247,14 @@ export class SupabaseProductRepository implements ProductRepository {
   }
 
   private adaptProductToLegacy(product: Product, media: ProductMedia[] = []): LegacyProduct {
+    const dbImage = getFullImageUrl(media.find(m => m.is_primary)?.url || '')
+    const localImage = LOCAL_IMAGE_MAP[product.id] || ''
     return {
       id: product.id,
       name: product.name,
       description: product.description || '',
       price: product.price,
-      image: media.find(m => m.is_primary)?.url || '',
+      image: dbImage || localImage,
       category: 'Sin categoría',
       is_featured: product.is_featured,
       specs: [],

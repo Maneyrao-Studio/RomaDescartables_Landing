@@ -28,7 +28,6 @@ export default function ProductCard({
     isIntersecting && !product.image
   )
 
-  // Use the best available image source
   const displayImage = imageUrl || product.image || "/placeholder.svg"
   const isPlaceholder = displayImage === "/placeholder.svg"
 
